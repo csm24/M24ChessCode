@@ -5,7 +5,7 @@ All Java (throughout the project) is under package **swantech**
 
 My parts revolve around the Chess Engine.
 
-It relies heavily on the ITCK Chess Library (qv)
+It relies heavily on the ITCK Chess Library , at http://jvarsoke.github.io/ictk/docs/
 
 It uses the StockFish chess engine https://stockfishchess.org/
 
