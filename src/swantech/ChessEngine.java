@@ -156,7 +156,7 @@ public class ChessEngine {
         // Is piece right colour?
         PlayColour moveColour = board.isBlackMove()?PlayColour.BLACK : PlayColour.WHITE;
         PlayColour pieceColour = thisPiece.isBlack()?PlayColour.BLACK : PlayColour.WHITE;
-        if (moveColour != pieceColour)
+        if (!moveColour.equals(pieceColour))
             return null;
 
         boolean wasBlackMove = board.isBlackMove();  // save current move state
@@ -183,6 +183,20 @@ public class ChessEngine {
         Square thisSquare = board.getSquare(sq.getFile(), sq.getRank());
         ChessPiece thisPiece = (ChessPiece) thisSquare.getPiece();
         return thisPiece;
+    }
+
+    /**
+     * Gets a populate board square for the rank and fiule
+     * @param rank Chess board 'row', 1..8, 1 is White pieces, 2 is white pawns, 7 is black pawns, 8 is black pieces
+     * @param file 1..8 Left to Right
+     * @return a Square, including any piece on it
+     */
+    public Square getChessSquare (int rank, int file){
+        assert rank > 0 && rank <= 8 && file > 0 && file <= 8;
+
+        Square s = board.getSquare(file, rank);
+        return s;
+
     }
 
     /**
@@ -257,7 +271,7 @@ public class ChessEngine {
                 return ChessEngineErrors.WRONG_COLOUR;
             }
 
-            Move m = makeAMove(startSquare, endSquare); // Th eITYCK method that does the work
+            Move m = makeAMove(startSquare, endSquare); // The ICTK method that does the work
 
         } catch (Exception e) {
             LG.log(Level.SEVERE, "ChessEngine makeMyMove FAILED");

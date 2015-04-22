@@ -35,13 +35,14 @@ import ictk.boardgame.chess.Square;
 public class ChessBoard {
     
 	private final JPanel gui = new JPanel(new BorderLayout(3, 3));
-	private final JButton[][] chessBoardSquares = new JButton[8][8];
+	private final JButton[][] chessBoardSquares = new JButton[8][8];  // Row, Col (but all wrong)
 	private JPanel chessBoard;
 	private static final String COLS = "ABCDEFGH";
 	private static final int squareSize = 64;
         private static final String imageDir= "../res/";
 	private static ChessEngine chessEngine;
 	private static PlayColour myColour;
+	private static int candidateRow = 0, candidateCol = 0;
 
 	ChessBoard()   {
 		initializeGui();
@@ -49,7 +50,7 @@ public class ChessBoard {
 		// And init the chess engine...
 		try {
 			myColour = PlayColour.WHITE;
-			chessEngine = new ChessEngine(chessEngine.otherColour (myColour));  // tell chess engine what colur IT is playing
+			chessEngine = new ChessEngine(chessEngine.otherColour(myColour));  // tell chess engine what colur IT is playing
 		} catch (Exception e){
 			System.out.println("Failed to initialse the chess engine, exiting");
 			System.out.println("Error is : " + e.getMessage());
@@ -147,7 +148,8 @@ public class ChessBoard {
 
 		r = 8-r;
 		f++;
-		Square s = new Square((byte)f, (byte)r);
+		Square s = chessEngine.getChessSquare(r, f);
+
 		return s;
 	}
 	private int squareToRow(Square s)
@@ -170,45 +172,110 @@ public class ChessBoard {
 		Object source = e.getSource();
 		if (source instanceof JButton) {
 			JButton b = (JButton)source;
-			ArrayList<Square> squares;
 
 			// Now have the button that was pressed
 			// get the details of the square
 			int row = (Integer)b.getClientProperty("row");
 			int col = (Integer)b.getClientProperty("col");
 			boolean isHighlighted = (Boolean)b.getClientProperty("highlighted");
-			// If its not one of my pieces, do nothing
-
-
-			// And unhighlight anything (its left over from last attempt)
-			unhighlightAll();
-			System.out.println("Button Clicked row : " + Integer.toString(row) +
-					", col : " + Integer.toString(col));
 
 			// OK lets play chess...
 			// Its always users turn if we get here
-			// What are the legal moves?
-			squares = chessEngine.getLegalMoves(intSquare(row, col));
-			if (squares == null) {
-				System.out.println("Nothing on this square");
-				highlight(row, col, true);
-				chessBoard.repaint();
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e1) {
-					e1.printStackTrace();
-				}
-				highlight(row, col, false);
+			if (isHighlighted){
+				// If it is highlighted, that's because I have already marked it as a legal move square,
+				// So we can make a move!
+				tryBoardMove(row, col);
 
 			} else {
-				int moveCount = squares.size();
-				for (int i = 0; i < moveCount; i++) {
-					int r = squareToRow(squares.get(i));
-					int c = squareToCol(squares.get(i));
-					highlight(r, c, true);
-				}
+				// Else its an unhighlighted square, is it another candidate?
+				// first  unhighlight anything (its left over from last attempt)
+
+				showMoves(row, col);
 			}
+		} // else its not a button, I dom't care what else it may be
+	}
+
+	/**
+	 * User has clicked any square. If it their piece and can be moved,  \n
+	 * Record the place, highlight legal move squares
+	 * @param row
+	 * @param col
+	 */
+	private void showMoves(int row, int col) {
+		unhighlightAll();
+		System.out.println("Button Clicked row : " + Integer.toString(row) + ", col : " + Integer.toString(col));
+
+		// What are the legal moves?
+		ArrayList<Square> squares = chessEngine.getLegalMoves(intSquare(row, col));
+		if (squares == null) {
+            System.out.println("Nothing on this square");
+            flashSquare(row, col);
+        } else {
+            // OK, there are legal moves from here, record this as a candidate and highlight the legal moves.
+            candidateCol = col;
+            candidateRow = row;
+            for (int i = 0; i < squares.size(); i++) {
+                highlight(squareToRow(squares.get(i)), squareToCol(squares.get(i)), true);
+            }
+        }
+	}
+
+	/**
+	 * User has already selected a possible move piece, and has now selected one of the highligted legal move squares
+	 * SO make the move, then play opposing move.
+	 * @param row  TOI square
+	 * @param col
+	 * (globals candidateRow, candidateCol have the FROM details)
+	 */
+	private void tryBoardMove(int row, int col) {
+		Square fromSquare = intSquare(candidateRow, candidateCol);
+		Square toSquare = intSquare(row, col);
+		ChessEngineErrors ce = chessEngine.makeMyMove(fromSquare, toSquare);
+
+		if (ce != ChessEngineErrors.OK){
+            System.out.println("Chess engine ERROR : " + ce.name());
+        } else {
+            // Move OK, update board
+            makeBoardMove(fromSquare, toSquare);
+
+			MakeOtherPlayerMove();
+
+        }
+	}
+
+	/**
+	 * Player has just made their (legal) move -
+	 * this method does the 'Other Player' move
+	 */
+	private void MakeOtherPlayerMove() {
+		ChessMove to = chessEngine.engineMove();
+		makeBoardMove(to.getOrigin(), to.getDestination());
+	}
+
+	private JButton buttonFromSquare(Square s)
+	{
+		Square t = s;
+		return chessBoardSquares[s.getFile()-1][8-s.getRank()];
+	}
+	private void makeBoardMove(Square fromSquare, Square toSquare) {
+		JButton fromButon = buttonFromSquare(fromSquare);
+		JButton toButon = buttonFromSquare(toSquare);
+		String piece = (String)fromButon.getClientProperty("piece");
+		RemovePiece(squareToRow(fromSquare), squareToCol(fromSquare));
+		setPiece(squareToRow(toSquare), squareToCol(toSquare), piece);
+		unhighlightAll();
+	}
+
+	private void flashSquare(int row, int col) {
+
+		highlight(row, col, true);
+		chessBoard.repaint();
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e1) {
+			e1.printStackTrace();
 		}
+		highlight(row, col, false);
 	}
 
 
@@ -258,6 +325,7 @@ public class ChessBoard {
 		for (int r = 0; r < 8; r++)
 			for (int c = 0; c < 8; c++)
 				highlight(r, c, false);
+		candidateRow = candidateCol = 0;
 	}
 
 	public void RemovePiece(int row, int col) {
@@ -269,37 +337,36 @@ public class ChessBoard {
 				squareSize, BufferedImage.TYPE_INT_ARGB));
 		b.setIcon(icon);
 		b.setBackground(setSquareBackgroundColor(row, col));
+		b.putClientProperty("piece", "");
 
 	}
 
 	public void resetPieces() {
-		for (int i = 1; i <= 8; i++) {
-			setPiece(i, 7, "wp");
-			setPiece(i, 2, "bp");
+		for (int i = 0; i < 8; i++) {
+			setPiece(i, 6, "wp");
+			setPiece(i, 1, "bp");
 		}
 
-		setPiece(8, 8, "wr");
-		setPiece(7, 8, "wn");
-		setPiece(6, 8, "wb");
-		setPiece(5, 8, "wk");
-		setPiece(4, 8, "wq");
-		setPiece(3, 8, "wb");
-		setPiece(2, 8, "wk");
-		setPiece(1, 8, "wr");
+		setPiece(7, 7, "wr");
+		setPiece(6, 7, "wn");
+		setPiece(5, 7, "wb");
+		setPiece(4, 7, "wk");
+		setPiece(3, 7, "wq");
+		setPiece(2, 7, "wb");
+		setPiece(1, 7, "wk");
+		setPiece(0, 7, "wr");
 
-		setPiece(1, 1, "br");
-		setPiece(2, 1, "bn");
-		setPiece(3, 1, "bb");
-		setPiece(4, 1, "bq");
-		setPiece(5, 1, "bk");
-		setPiece(6, 1, "bb");
-		setPiece(7, 1, "bn");
-		setPiece(8, 1, "br");
+		setPiece(0, 0, "br");
+		setPiece(1, 0, "bn");
+		setPiece(2, 0, "bb");
+		setPiece(3, 0, "bq");
+		setPiece(4, 0, "bk");
+		setPiece(5, 0, "bb");
+		setPiece(6, 0, "bn");
+		setPiece(7, 0, "br");
 	}
 
 	public void setPiece(int row, int col, String pieceName) {
-		row--;
-		col--;  // no idea why suddenly 1..8 not 0..7
 		assert row >= 0 && row < 8 && col >= 0 && col < 8;
 
 		JButton b = chessBoardSquares[row][col];
@@ -316,6 +383,7 @@ public class ChessBoard {
 		icon = new ImageIcon(piece);
 		b.setIcon(icon);
 		b.setBackground(setSquareBackgroundColor(row, col));
+		b.putClientProperty("piece", pieceName);
 	}
         
         private  JComponent getChessBoard() {
