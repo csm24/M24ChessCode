@@ -55,6 +55,18 @@ public class ChessEngine {
 
 
     /**
+     *
+     * @param thisColour
+     * @return The other colour
+     * eg otherColour(PlayColour.BLACK) returns PlayColour.WHITE
+     */
+    public static PlayColour otherColour (PlayColour thisColour) {
+        if (thisColour == PlayColour.BLACK)
+            return PlayColour.WHITE;
+        else
+            return PlayColour.BLACK;
+    }
+    /**
      * Default constructor. Sets up a new board with standard starting position
      * Starts the Stockfish engine.
      *
@@ -141,7 +153,14 @@ public class ChessEngine {
         ChessPiece thisPiece = (ChessPiece) thisSquare.getPiece();
         if (thisPiece == null) return null; // Null piece as the square is empty
 
+        // Is piece right colour?
+        PlayColour moveColour = board.isBlackMove()?PlayColour.BLACK : PlayColour.WHITE;
+        PlayColour pieceColour = thisPiece.isBlack()?PlayColour.BLACK : PlayColour.WHITE;
+        if (moveColour != pieceColour)
+            return null;
+
         boolean wasBlackMove = board.isBlackMove();  // save current move state
+
         board.setBlackMove(thisPiece.isBlack()); // set the right player
         ArrayList<Square> legalMoves = (ArrayList<Square>) thisPiece.getLegalDests();
         board.setBlackMove(wasBlackMove);

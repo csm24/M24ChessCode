@@ -26,6 +26,7 @@ public class ChessEngineTest {
         Square s = new Square((byte)f, (byte)r);
         return s;
     }
+
     @Before
     public void setUp() throws Exception {
         chessEngine = new ChessEngine(PlayColour.BLACK);

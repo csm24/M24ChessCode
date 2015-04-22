@@ -22,8 +22,12 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Objects;
-
+//import ictk.boardgame.chess.ChessBoard;
+import ictk.boardgame.chess.ChessMove;
+import ictk.boardgame.chess.ChessPiece;
+import ictk.boardgame.chess.Square;
 /**
  *
  * @author moho
@@ -36,10 +40,22 @@ public class ChessBoard {
 	private static final String COLS = "ABCDEFGH";
 	private static final int squareSize = 64;
         private static final String imageDir= "../res/";
+	private static ChessEngine chessEngine;
+	private static PlayColour myColour;
 
-	ChessBoard() {
-		initializeGui();                
-		
+	ChessBoard()   {
+		initializeGui();
+
+		// And init the chess engine...
+		try {
+			myColour = PlayColour.WHITE;
+			chessEngine = new ChessEngine(chessEngine.otherColour (myColour));  // tell chess engine what colur IT is playing
+		} catch (Exception e){
+			System.out.println("Failed to initialse the chess engine, exiting");
+			System.out.println("Error is : " + e.getMessage());
+			System.exit(99);
+		}
+
 	}
 
 	
@@ -75,15 +91,8 @@ public class ChessBoard {
 			}
 		}
 
-                // TODO kill this
 
-                resetPieces();
-//                RemovePiece(3, 2);
-//                setPiece(3, 4, "bp");
-//                highlight(3, 5, true);
-//                highlight(3, 4, true);
-                
-		
+		resetPieces();  // Place the pieces in the start position
 
 		// fill the chess board
 		chessBoard.add(new JLabel(""));
@@ -124,6 +133,33 @@ public class ChessBoard {
 
 	}
 
+
+	// Just shorthand to avoid the typecast on every use.
+	// NOTE chessEngine (and ictk library) work on rank & file = [1..8]
+	// but this class works on [0..7],
+	// AND rank in the wrong order! Should be 1 at Bottom (White Queen rank)
+	// so these methods do the conversion
+	// ONLY use these methods to convert to/from Square
+
+	private Square intSquare(int f, int r)
+	{
+		assert f >= 0 && f < 8 && r >= 0 && r < 8;
+
+		r = 8-r;
+		f++;
+		Square s = new Square((byte)f, (byte)r);
+		return s;
+	}
+	private int squareToRow(Square s)
+	{
+		return s.getFile()-1;
+	}
+	private int squareToCol(Square s)
+	{
+		return 8 - s.getRank();
+	}
+
+
 	/**
 	 * This is the big one.
 	 * Called when user clicks ANY square
@@ -134,21 +170,47 @@ public class ChessBoard {
 		Object source = e.getSource();
 		if (source instanceof JButton) {
 			JButton b = (JButton)source;
-			// Now have the button that was pressed
+			ArrayList<Square> squares;
 
+			// Now have the button that was pressed
+			// get the details of the square
 			int row = (Integer)b.getClientProperty("row");
 			int col = (Integer)b.getClientProperty("col");
 			boolean isHighlighted = (Boolean)b.getClientProperty("highlighted");
+			// If its not one of my pieces, do nothing
 
+
+			// And unhighlight anything (its left over from last attempt)
+			unhighlightAll();
 			System.out.println("Button Clicked row : " + Integer.toString(row) +
-								", col : " + Integer.toString(col));
+					", col : " + Integer.toString(col));
 
-			highlight(row, col, !isHighlighted);
-			b.putClientProperty("highlighted", !isHighlighted);
+			// OK lets play chess...
+			// Its always users turn if we get here
+			// What are the legal moves?
+			squares = chessEngine.getLegalMoves(intSquare(row, col));
+			if (squares == null) {
+				System.out.println("Nothing on this square");
+				highlight(row, col, true);
+				chessBoard.repaint();
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
+				highlight(row, col, false);
+
+			} else {
+				int moveCount = squares.size();
+				for (int i = 0; i < moveCount; i++) {
+					int r = squareToRow(squares.get(i));
+					int c = squareToCol(squares.get(i));
+					highlight(r, c, true);
+				}
+			}
 		}
-
-
 	}
+
 
 	/**
 	 * Simple utility to set the background colour based on row and col.
@@ -158,6 +220,7 @@ public class ChessBoard {
 	 * @return A colour (Gray or White)
 	 */
 	private Color setSquareBackgroundColor (int row, int col) {
+		assert row >= 0 && row < 8 && col >= 0 && col < 8;
 
 		if ((row % 2 == 1 && col % 2 == 1)
 				|| (row % 2 == 0 && col % 2 == 0)) {
@@ -174,16 +237,32 @@ public class ChessBoard {
 	 * @param highlight
 	 */
 	public void highlight(int row, int col, boolean highlight) {
+		assert row >= 0 && row < 8 && col >= 0 && col < 8;
 
 		JButton b = this.chessBoardSquares[row][col];
-		if (highlight)
+		if (highlight) {
 			b.setBackground(Color.ORANGE);
-		else
+			b.putClientProperty("highlighted", true);
+		}
+		else {
 			b.setBackground(setSquareBackgroundColor(row, col));
+			b.putClientProperty("highlighted", false);
+		}
+
+	}
+
+	/**
+	 * Shorthand utility, remove all highlighting
+	 */
+	private void unhighlightAll() {
+		for (int r = 0; r < 8; r++)
+			for (int c = 0; c < 8; c++)
+				highlight(r, c, false);
 	}
 
 	public void RemovePiece(int row, int col) {
 
+		assert row >= 0 && row < 8 && col >= 0 && col < 8;
 
 		JButton b = chessBoardSquares[row][col];
 		ImageIcon icon = new ImageIcon(new BufferedImage(squareSize,
@@ -194,6 +273,11 @@ public class ChessBoard {
 	}
 
 	public void resetPieces() {
+		for (int i = 1; i <= 8; i++) {
+			setPiece(i, 7, "wp");
+			setPiece(i, 2, "bp");
+		}
+
 		setPiece(8, 8, "wr");
 		setPiece(7, 8, "wn");
 		setPiece(6, 8, "wb");
@@ -202,14 +286,6 @@ public class ChessBoard {
 		setPiece(3, 8, "wb");
 		setPiece(2, 8, "wk");
 		setPiece(1, 8, "wr");
-		setPiece(8, 7, "wp");
-		setPiece(7, 7, "wp");
-		setPiece(6, 7, "wp");
-		setPiece(5, 7, "wp");
-		setPiece(4, 7, "wp");
-		setPiece(3, 7, "wp");
-		setPiece(2, 7, "wp");
-		setPiece(1, 7, "wp");
 
 		setPiece(1, 1, "br");
 		setPiece(2, 1, "bn");
@@ -217,22 +293,14 @@ public class ChessBoard {
 		setPiece(4, 1, "bq");
 		setPiece(5, 1, "bk");
 		setPiece(6, 1, "bb");
-		setPiece(7, 1, "bk");
+		setPiece(7, 1, "bn");
 		setPiece(8, 1, "br");
-		setPiece(8, 2, "bp");
-		setPiece(7, 2, "bp");
-		setPiece(6, 2, "bp");
-		setPiece(5, 2, "bp");
-		setPiece(4, 2, "bp");
-		setPiece(3, 2, "bp");
-		setPiece(2, 2, "bp");
-		setPiece(1, 2, "bp");
-
 	}
 
 	public void setPiece(int row, int col, String pieceName) {
 		row--;
 		col--;  // no idea why suddenly 1..8 not 0..7
+		assert row >= 0 && row < 8 && col >= 0 && col < 8;
 
 		JButton b = chessBoardSquares[row][col];
 		ImageIcon icon;
@@ -248,7 +316,6 @@ public class ChessBoard {
 		icon = new ImageIcon(piece);
 		b.setIcon(icon);
 		b.setBackground(setSquareBackgroundColor(row, col));
-
 	}
         
         private  JComponent getChessBoard() {
