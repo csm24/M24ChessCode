@@ -23,10 +23,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Objects;
-//import ictk.boardgame.chess.ChessBoard;
+
 import ictk.boardgame.chess.ChessMove;
-import ictk.boardgame.chess.ChessPiece;
 import ictk.boardgame.chess.Square;
 /**
  *
@@ -184,12 +182,10 @@ public class ChessBoard {
 			if (isHighlighted){
 				// If it is highlighted, that's because I have already marked it as a legal move square,
 				// So we can make a move!
-				tryBoardMove(row, col);
+				makeBoardMove(row, col);
 
 			} else {
 				// Else its an unhighlighted square, is it another candidate?
-				// first  unhighlight anything (its left over from last attempt)
-
 				showMoves(row, col);
 			}
 		} // else its not a button, I dom't care what else it may be
@@ -203,13 +199,13 @@ public class ChessBoard {
 	 */
 	private void showMoves(int row, int col) {
 		unhighlightAll();
-		System.out.println("Button Clicked row : " + Integer.toString(row) + ", col : " + Integer.toString(col));
+		//System.out.println("Button Clicked row : " + Integer.toString(row) + ", col : " + Integer.toString(col));
 
 		// What are the legal moves?
 		ArrayList<Square> squares = chessEngine.getLegalMoves(intSquare(row, col));
 		if (squares == null) {
-            System.out.println("Nothing on this square");
-            flashSquare(row, col);
+            //System.out.println("Nothing on this square");
+            flashSquare(row, col);  // TODO: Does not work
         } else {
             // OK, there are legal moves from here, record this as a candidate and highlight the legal moves.
             candidateCol = col;
@@ -227,29 +223,54 @@ public class ChessBoard {
 	 * @param col
 	 * (globals candidateRow, candidateCol have the FROM details)
 	 */
-	private void tryBoardMove(int row, int col) {
+	private void makeBoardMove(int row, int col) {
 		Square fromSquare = intSquare(candidateRow, candidateCol);
 		Square toSquare = intSquare(row, col);
 		ChessEngineErrors ce = chessEngine.makeMyMove(fromSquare, toSquare);
 
 		if (ce != ChessEngineErrors.OK){
-            System.out.println("Chess engine ERROR : " + ce.name());
+            System.out.println("ChessBoard:makeBoardMove: Chess engine ERROR : " + ce.name());
         } else {
             // Move OK, update board
-            makeBoardMove(fromSquare, toSquare);
+            drawBoardMove(fromSquare, toSquare);
 
+			// And immediately get engine/other player to make a move
 			MakeOtherPlayerMove();
-
         }
 	}
 
 	/**
 	 * Player has just made their (legal) move -
 	 * this method does the 'Other Player' move
+	 * Chess engine or network player
 	 */
 	private void MakeOtherPlayerMove() {
 		ChessMove to = chessEngine.engineMove();
-		makeBoardMove(to.getOrigin(), to.getDestination());
+		updateStatus(to);
+		drawBoardMove(to.getOrigin(), to.getDestination());
+	}
+
+	/**
+	 * ChessMove to has methods that describe the state of play after the move, this method
+	 * updates the display to show, eg check, check-mate
+	 * @param to
+	 */
+	private void updateStatus(ChessMove to) {
+		String playerColour = to.isBlackMove()?"White":"Black";  // backwards deliberately!
+		if (to.isCheckmate()) {
+			// GAME OVER
+			Square kingSq = chessEngine.findPiece("King", playerColour);
+			highlight(squareToRow(kingSq), squareToCol(kingSq), true);
+			System.out.println("Gaqme Over, "+playerColour+" WON!");
+		}
+		else if (to.isCheck() || to.isDoubleCheck()) {
+			System.out.println("Player : " + playerColour + " IN CHECK!");
+			// find King?
+			Square kingSq = chessEngine.findPiece("King", playerColour);
+			highlight(squareToRow(kingSq), squareToCol(kingSq), true);
+
+		}
+
 	}
 
 	private JButton buttonFromSquare(Square s)
@@ -257,7 +278,13 @@ public class ChessBoard {
 		Square t = s;
 		return chessBoardSquares[s.getFile()-1][8-s.getRank()];
 	}
-	private void makeBoardMove(Square fromSquare, Square toSquare) {
+
+	/**
+	 * Draws the move onto the board
+	 * @param fromSquare
+	 * @param toSquare
+	 */
+	private void drawBoardMove(Square fromSquare, Square toSquare) {
 		JButton fromButon = buttonFromSquare(fromSquare);
 		JButton toButon = buttonFromSquare(toSquare);
 		String piece = (String)fromButon.getClientProperty("piece");

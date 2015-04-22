@@ -66,6 +66,28 @@ public class ChessEngine {
         else
             return PlayColour.BLACK;
     }
+
+    /**
+     * Finds the square for a piece, or null if not on board
+     * @return
+     */
+    public Square findPiece (String name, String colour)
+    {// TODO: this is rubbish
+        Square s=null;
+
+    for (int r = 1; r <= 8; r++)
+        for (int c = 1; c <= 8; c++) {
+             s = board.getSquare(r, c);
+            ChessPiece p = (ChessPiece) s.getPiece();
+            if ((p != null) && (p.isKing())){
+                return s;
+            }
+
+        }
+
+       return s;
+
+    }
     /**
      * Default constructor. Sets up a new board with standard starting position
      * Starts the Stockfish engine.
@@ -163,17 +185,13 @@ public class ChessEngine {
         if (!moveColour.equals(pieceColour))
             return null;
 
-        boolean wasBlackMove = board.isBlackMove();  // save current move state
-
-        if (wasBlackMove != thisPiece.isBlack())
+        if (board.isBlackMove() != thisPiece.isBlack())
         {
             System.out.println("Internal error , piece is : " + colourFromBool(thisPiece.isBlack()) +
-                                    "Game turn is : " + colourFromBool(wasBlackMove));
+                                    "Game turn is : " + colourFromBool(board.isBlackMove()));
             return null;
         }
-        //board.setBlackMove(thisPiece.isBlack()); // set the right player TODO: tidy
         ArrayList<Square> legalMoves = (ArrayList<Square>) thisPiece.getLegalDests();
-        //board.setBlackMove(wasBlackMove);
 
         return legalMoves;
     }
