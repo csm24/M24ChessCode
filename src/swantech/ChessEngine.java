@@ -131,6 +131,10 @@ public class ChessEngine {
         return ChessEngineErrors.OK;
     }
 
+    private static String colourFromBool(boolean isBlack)
+    {
+        return isBlack?"Black":"White";
+    }
     /**
      * Given a board square that has a piece on it, returns a list of squares that this piece is permitted to move to,
      * based on the current board state.
@@ -161,9 +165,15 @@ public class ChessEngine {
 
         boolean wasBlackMove = board.isBlackMove();  // save current move state
 
-        board.setBlackMove(thisPiece.isBlack()); // set the right player
+        if (wasBlackMove != thisPiece.isBlack())
+        {
+            System.out.println("Internal error , piece is : " + colourFromBool(thisPiece.isBlack()) +
+                                    "Game turn is : " + colourFromBool(wasBlackMove));
+            return null;
+        }
+        //board.setBlackMove(thisPiece.isBlack()); // set the right player TODO: tidy
         ArrayList<Square> legalMoves = (ArrayList<Square>) thisPiece.getLegalDests();
-        board.setBlackMove(wasBlackMove);
+        //board.setBlackMove(wasBlackMove);
 
         return legalMoves;
     }

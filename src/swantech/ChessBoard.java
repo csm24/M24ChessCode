@@ -172,7 +172,7 @@ public class ChessBoard {
 		Object source = e.getSource();
 		if (source instanceof JButton) {
 			JButton b = (JButton)source;
-
+			System.out.println("Whose move : " + chessEngine.whoseMove());
 			// Now have the button that was pressed
 			// get the details of the square
 			int row = (Integer)b.getClientProperty("row");
