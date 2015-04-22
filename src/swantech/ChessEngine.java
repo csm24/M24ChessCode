@@ -39,8 +39,8 @@ import static ictk.boardgame.chess.io.FEN.*;
 
 public class ChessEngine {
 
-    ChessGame game = null;
-    ChessBoard board = null;
+    ictk.boardgame.chess.ChessGame game = null;
+    ictk.boardgame.chess.ChessBoard board = null;
     History history = null;
     Move move = null,
             e4 = null;
@@ -74,7 +74,7 @@ public class ChessEngine {
 
             //setup ready for the moves
             history = game.getHistory();
-            board = (ChessBoard) game.getBoard();
+            board = (ictk.boardgame.chess.ChessBoard) game.getBoard();
 
             board.setBlackMove(engineColour == PlayColour.WHITE); // start as White or Black
 
@@ -183,7 +183,7 @@ public class ChessEngine {
      */
     private Move makeAMove(Square startSquare, Square endSquare) throws Exception {
         try {
-            Move m = new ChessMove((ChessBoard) board, startSquare.getFile(), startSquare.getRank(), endSquare.getFile(), endSquare.getRank());
+            Move m = new ChessMove((ictk.boardgame.chess.ChessBoard) board, startSquare.getFile(), startSquare.getRank(), endSquare.getFile(), endSquare.getRank());
             if (m.isLegal()) {
                 history.add(m);  // This executes the move, and records it in history
             } else {
@@ -262,7 +262,7 @@ public class ChessEngine {
      */
     public String getGameFEN() {
         FEN f = new FEN();
-        String fen = f.boardToString((ChessBoard) game.getBoard());
+        String fen = f.boardToString((ictk.boardgame.chess.ChessBoard) game.getBoard());
         return fen;
     }
 
@@ -284,8 +284,8 @@ public class ChessEngine {
     /**
      * @return current ChessBoard
      */
-    public ChessBoard getChessBoard() {
-        return board;
+    public ictk.boardgame.chess.ChessBoard getChessBoard() {
+        return (ictk.boardgame.chess.ChessBoard)board;
     }
 
     /**

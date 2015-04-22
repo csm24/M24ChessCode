@@ -27,7 +27,7 @@ import javax.swing.border.LineBorder;
  */
 public class ChessBoard {
     
-        private final JPanel gui = new JPanel(new BorderLayout(3, 3));
+	private final JPanel gui = new JPanel(new BorderLayout(3, 3));
 	private final JButton[][] chessBoardSquares = new JButton[8][8];
 	private JPanel chessBoard;
 	private static final String COLS = "ABCDEFGH";
@@ -99,7 +99,7 @@ public class ChessBoard {
                 
                 */
                 
-                JFrame f = new JFrame("Chess Board");
+		JFrame f = new JFrame("Chess Board");
 		f.add(this.getGui());
 		f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		f.setLocationByPlatform(true);
