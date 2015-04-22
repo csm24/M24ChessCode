@@ -9,6 +9,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
@@ -20,6 +21,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
+import java.awt.event.ActionListener;
+import java.util.Objects;
 
 /**
  *
@@ -51,26 +54,34 @@ public class ChessBoard {
 		for (int col = 0; col < chessBoardSquares.length; col++) {
 			for (int row = 0; row < chessBoardSquares[col].length; row++) {
 				JButton b = new JButton();
+				b.putClientProperty("row", row);
+				b.putClientProperty("col", col);
+				b.putClientProperty("highlighted", false);
 				b.setMargin(buttonMargin);
 				ImageIcon icon = new ImageIcon(new BufferedImage(squareSize,
 						squareSize, BufferedImage.TYPE_INT_ARGB));
 				b.setIcon(icon);
-				if ((row % 2 == 1 && col % 2 == 1)
-						|| (row % 2 == 0 && col % 2 == 0)) {
-					b.setBackground(Color.WHITE);
-				} else {
-					b.setBackground(Color.GRAY);
-				}
+				b.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						actionSquare(e);
+					}
+
+
+				});
+				b.setBackground(setSquareBackgroundColor(row, col));
+
 				chessBoardSquares[row][col] = b;
 			}
 		}
 
-                
+                // TODO kill this
+
                 resetPieces();
-                RemovePiece(3, 2);
-                setPiece(3, 4, "bp");
-                highlight(3, 5);
-                highlight(3, 4);
+//                RemovePiece(3, 2);
+//                setPiece(3, 4, "bp");
+//                highlight(3, 5, true);
+//                highlight(3, 4, true);
                 
 		
 
@@ -110,37 +121,76 @@ public class ChessBoard {
 		// ensures the minimum size is enforced.
 		f.setMinimumSize(f.getSize());
 		f.setVisible(true);
-                
-                
+
 	}
 
-	/** 
-	 * @param row, 0 - 7            
-	 * @param col, 0 - 7            
+	/**
+	 * This is the big one.
+	 * Called when user clicks ANY square
+	 * @param actionEvent e - get the jButton pressed from this
 	 */
-	public void highlight(int row, int col) {
-		Insets buttonMargin = new Insets(0, 0, 0, 0);
-		JButton b = new JButton();
-		b.setMargin(buttonMargin);
-		ImageIcon icon = new ImageIcon(new BufferedImage(squareSize, squareSize, BufferedImage.TYPE_INT_ARGB));
-		b.setIcon(icon);
-		b.setBackground(Color.ORANGE);
-		this.chessBoardSquares[row][col] = b;
+	private void actionSquare(ActionEvent e) {
+
+		Object source = e.getSource();
+		if (source instanceof JButton) {
+			JButton b = (JButton)source;
+			// Now have the button that was pressed
+
+			int row = (Integer)b.getClientProperty("row");
+			int col = (Integer)b.getClientProperty("col");
+			boolean isHighlighted = (Boolean)b.getClientProperty("highlighted");
+
+			System.out.println("Button Clicked row : " + Integer.toString(row) +
+								", col : " + Integer.toString(col));
+
+			highlight(row, col, !isHighlighted);
+			b.putClientProperty("highlighted", !isHighlighted);
+		}
+
+
+	}
+
+	/**
+	 * Simple utility to set the background colour based on row and col.
+	 * As a function because its needed to unhighlight a square
+	 * @param row 0..7
+	 * @param col 0..7
+	 * @return A colour (Gray or White)
+	 */
+	private Color setSquareBackgroundColor (int row, int col) {
+
+		if ((row % 2 == 1 && col % 2 == 1)
+				|| (row % 2 == 0 && col % 2 == 0)) {
+			return Color.WHITE;
+		} else {
+			return Color.GRAY;
+		}
+	}
+
+	/**
+	 * Highlights or unhighlights a given square
+	 * @param row, 0 - 7
+	 * @param col, 0 - 7
+	 * @param highlight
+	 */
+	public void highlight(int row, int col, boolean highlight) {
+
+		JButton b = this.chessBoardSquares[row][col];
+		if (highlight)
+			b.setBackground(Color.ORANGE);
+		else
+			b.setBackground(setSquareBackgroundColor(row, col));
 	}
 
 	public void RemovePiece(int row, int col) {
-		Insets buttonMargin = new Insets(0, 0, 0, 0);
-		JButton b = new JButton();
-		b.setMargin(buttonMargin);
+
+
+		JButton b = chessBoardSquares[row][col];
 		ImageIcon icon = new ImageIcon(new BufferedImage(squareSize,
 				squareSize, BufferedImage.TYPE_INT_ARGB));
 		b.setIcon(icon);
-		if ((row % 2 == 1 && col % 2 == 1) || (row % 2 == 0 && col % 2 == 0)) {
-			b.setBackground(Color.WHITE);
-		} else {
-			b.setBackground(Color.GRAY);
-		}
-		this.chessBoardSquares[row - 1][col - 1] = b;
+		b.setBackground(setSquareBackgroundColor(row, col));
+
 	}
 
 	public void resetPieces() {
@@ -181,8 +231,10 @@ public class ChessBoard {
 	}
 
 	public void setPiece(int row, int col, String pieceName) {
-		Insets buttonMargin = new Insets(0, 0, 0, 0);
-		JButton b = new JButton();
+		row--;
+		col--;  // no idea why suddenly 1..8 not 0..7
+
+		JButton b = chessBoardSquares[row][col];
 		ImageIcon icon;
 		BufferedImage piece = null;
 
@@ -194,17 +246,9 @@ public class ChessBoard {
                 }
 
 		icon = new ImageIcon(piece);
-
 		b.setIcon(icon);
-		b.setMargin(buttonMargin);
-		b.setIcon(icon);
+		b.setBackground(setSquareBackgroundColor(row, col));
 
-		if ((row % 2 == 1 && col % 2 == 1) || (row % 2 == 0 && col % 2 == 0)) {
-			b.setBackground(Color.WHITE);
-		} else {
-			b.setBackground(Color.GRAY);
-		}
-		this.chessBoardSquares[row - 1][col - 1] = b;
 	}
         
         private  JComponent getChessBoard() {
@@ -215,29 +259,4 @@ public class ChessBoard {
 		return gui;
 	}
 
-        /*
-	public static void main_tmp(String[] args) {
-
-		Runnable r = new Runnable() {
-
-			@Override
-			public void run() {
-				ChessBoard cb = new ChessBoard();
-
-				JFrame f = new JFrame("Chess Board");
-				f.add(cb.getGui());
-				f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				f.setLocationByPlatform(true);
-
-				// ensures the frame is the minimum size it needs to be
-				// in order display the components within it
-				f.pack();
-				// ensures the minimum size is enforced.
-				f.setMinimumSize(f.getSize());
-				f.setVisible(true);
-			}
-		};
-		SwingUtilities.invokeLater(r);
-	}
-        */
 }

@@ -5,6 +5,11 @@
  */
 package swantech;
 
+import ictk.boardgame.*;
+import ictk.boardgame.chess.*;
+import ictk.boardgame.chess.io.FEN;
+
+
 /**
  *
  * @author moho
@@ -70,17 +75,8 @@ public class Main extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                //new Main().setVisible(true);
-                ChessBoard ch = new ChessBoard();
-                ch.highlight(4, 1);
-            }
-        });
+        ChessBoard ch = new ChessBoard();
+        // Never returns (until exit)
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    // End of variables declaration//GEN-END:variables
 }
