@@ -187,7 +187,7 @@ public class ChessEngine {
 
         if (board.isBlackMove() != thisPiece.isBlack())
         {
-            System.out.println("Internal error , piece is : " + colourFromBool(thisPiece.isBlack()) +
+            System.err.println("Internal error , piece is : " + colourFromBool(thisPiece.isBlack()) +
                                     "Game turn is : " + colourFromBool(board.isBlackMove()));
             return null;
         }
@@ -251,8 +251,6 @@ public class ChessEngine {
                 LG.log(Level.SEVERE, "makeMyMove Illegal move : " + m.toString());
                 throw new IllegalMoveException("ChessEngine:makeAMove ChessMove was illegal : " + m.toString());
             }
-
-            //System.out.println(m);
             return m;
         } catch (Exception e) {
             LG.log(Level.SEVERE, "makeAMove failed to create new move");
@@ -415,7 +413,6 @@ public class ChessEngine {
             Square toSquare = new Square(m.charAt(2), m.charAt(3));
 
             move = (ChessMove) makeAMove(fromSquare, toSquare);
-            // System.out.println(move.dump());
 
         } catch (Exception e) {
             LG.log(Level.SEVERE, "engineMove FAILED");

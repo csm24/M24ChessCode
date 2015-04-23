@@ -41,6 +41,7 @@ public class ChessBoard {
 	private static ChessEngine chessEngine;
 	private static PlayColour myColour;
 	private static int candidateRow = 0, candidateCol = 0;
+	private static JLabel statusLabel;
 
 	ChessBoard()   {
 		initializeGui();
@@ -50,8 +51,8 @@ public class ChessBoard {
 			myColour = PlayColour.WHITE;
 			chessEngine = new ChessEngine(chessEngine.otherColour(myColour));  // tell chess engine what colur IT is playing
 		} catch (Exception e){
-			System.out.println("Failed to initialse the chess engine, exiting");
-			System.out.println("Error is : " + e.getMessage());
+			System.err.println("Failed to initialse the chess engine, exiting");
+			System.err.println("Error is : " + e.getMessage());
 			System.exit(99);
 		}
 
@@ -81,8 +82,6 @@ public class ChessBoard {
 					public void actionPerformed(ActionEvent e) {
 						actionSquare(e);
 					}
-
-
 				});
 				b.setBackground(setSquareBackgroundColor(row, col));
 
@@ -91,10 +90,12 @@ public class ChessBoard {
 		}
 
 
+
 		resetPieces();  // Place the pieces in the start position
 
 		// fill the chess board
-		chessBoard.add(new JLabel(""));
+		statusLabel = new JLabel("Starting");
+		chessBoard.add(statusLabel);
 		// fill the top row
 		for (int ii = 0; ii < 8; ii++) {
 			chessBoard.add(new JLabel(COLS.substring(ii, ii + 1),
@@ -111,12 +112,6 @@ public class ChessBoard {
 				}
 			}
 		}
-               /*
-                for (int ii = 7; ii >= 0; ii--) {
-			chessBoard.add(new JLabel(COLS.substring(ii, ii + 1), SwingConstants.CENTER));
-		}
-                
-                */
                 
 		JFrame f = new JFrame("Chess Board");
 		f.add(this.getGui());
@@ -132,6 +127,15 @@ public class ChessBoard {
 
 	}
 
+	/**
+	 * Updates the board status text field
+	 * @param status - text to be shown
+	 */
+	private void showBoardStatus(String status)
+	{
+		// todo: MOH update here
+		statusLabel.setText(status);
+	}
 
 	// Just shorthand to avoid the typecast on every use.
 	// NOTE chessEngine (and ictk library) work on rank & file = [1..8]
@@ -170,7 +174,7 @@ public class ChessBoard {
 		Object source = e.getSource();
 		if (source instanceof JButton) {
 			JButton b = (JButton)source;
-			System.out.println("Whose move : " + chessEngine.whoseMove());
+			//showBoardStatus((chessEngine.whoseMove()==PlayColour.BLACK?"Black":"White") + " move");
 			// Now have the button that was pressed
 			// get the details of the square
 			int row = (Integer)b.getClientProperty("row");
@@ -199,12 +203,10 @@ public class ChessBoard {
 	 */
 	private void showMoves(int row, int col) {
 		unhighlightAll();
-		//System.out.println("Button Clicked row : " + Integer.toString(row) + ", col : " + Integer.toString(col));
 
 		// What are the legal moves?
 		ArrayList<Square> squares = chessEngine.getLegalMoves(intSquare(row, col));
 		if (squares == null) {
-            //System.out.println("Nothing on this square");
             flashSquare(row, col);  // TODO: Does not work
         } else {
             // OK, there are legal moves from here, record this as a candidate and highlight the legal moves.
@@ -229,7 +231,7 @@ public class ChessBoard {
 		ChessEngineErrors ce = chessEngine.makeMyMove(fromSquare, toSquare);
 
 		if (ce != ChessEngineErrors.OK){
-            System.out.println("ChessBoard:makeBoardMove: Chess engine ERROR : " + ce.name());
+            System.err.println("ChessBoard:makeBoardMove: Chess engine ERROR : " + ce.name());
         } else {
             // Move OK, update board
             drawBoardMove(fromSquare, toSquare);
@@ -261,10 +263,13 @@ public class ChessBoard {
 			// GAME OVER
 			Square kingSq = chessEngine.findPiece("King", playerColour);
 			highlight(squareToRow(kingSq), squareToCol(kingSq), true);
-			System.out.println("Gaqme Over, "+playerColour+" WON!");
+			showBoardStatus("Game Over");
+			System.out.println("CheckMate");
+
 		}
 		else if (to.isCheck() || to.isDoubleCheck()) {
-			System.out.println("Player : " + playerColour + " IN CHECK!");
+			showBoardStatus("CHECK!");
+			System.out.println("Check");
 			// find King?
 			Square kingSq = chessEngine.findPiece("King", playerColour);
 			highlight(squareToRow(kingSq), squareToCol(kingSq), true);
