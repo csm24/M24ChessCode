@@ -113,7 +113,11 @@ public class ChessEngine {
             board.setBlackMove(engineColour == PlayColour.WHITE); // start as White or Black
 
             // keep for debugging - System.out.println("Working Directory = " + System.getProperty("user.dir"));
-            stockfish = new Stockfish("./engine/stockfish");  // create new stockfish interface
+
+            //Uncomment one of the next two stockfish initialization depending on your OS
+            stockfish = new Stockfish("./engine/stockfish");  // create new stockfish interface IOS
+            //stockfish = new Stockfish("./engine/stockfish-6-32.exe");  // create new stockfish interface WINDOWS
+
             if (!stockfish.startEngine()) {
                 LG.log(Level.SEVERE, "Cannot start StockFish chess engine");
                 throw new Exception("Cannot start StockFish chess engine");

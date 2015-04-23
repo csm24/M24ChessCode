@@ -23,6 +23,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import javax.swing.Timer;
+
 
 import ictk.boardgame.chess.ChessMove;
 import ictk.boardgame.chess.Square;
@@ -206,8 +208,8 @@ public class ChessBoard {
 
 		// What are the legal moves?
 		ArrayList<Square> squares = chessEngine.getLegalMoves(intSquare(row, col));
-		if (squares == null) {
-            flashSquare(row, col);  // TODO: Does not work
+		if (squares.size() == 0) { //AIF changed from squares == null
+            flashSquare(row, col);  // TODO: Does not work :: Works now Simon
         } else {
             // OK, there are legal moves from here, record this as a candidate and highlight the legal moves.
             candidateCol = col;
@@ -298,16 +300,31 @@ public class ChessBoard {
 		unhighlightAll();
 	}
 
+	/**
+	 * This method flashed the selected square when the selected piece on the selected square has not
+	 * valid move.
+	 * written by Ifetayo 23/4/2015
+	 * @param row int, row of the piece selected
+	 * @param col int, coloumn of the piece selected
+	 */
 	private void flashSquare(int row, int col) {
 
-		highlight(row, col, true);
-		chessBoard.repaint();
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e1) {
-			e1.printStackTrace();
-		}
-		highlight(row, col, false);
+		final JButton b = this.chessBoardSquares[row][col];
+		Timer timer = new Timer(500, new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(b.getBackground().equals(Color.ORANGE)){
+					b.setBackground(Color.GRAY);
+					((Timer)e.getSource()).stop();
+				}
+				else{
+					b.setBackground(Color.ORANGE);
+				}
+			}
+		});
+		timer.setInitialDelay(0);
+		timer.start();
+		b.putClientProperty("highlighted", false);
 	}
 
 
@@ -385,7 +402,7 @@ public class ChessBoard {
 		setPiece(4, 7, "wk");
 		setPiece(3, 7, "wq");
 		setPiece(2, 7, "wb");
-		setPiece(1, 7, "wk");
+		setPiece(1, 7, "wn"); //AIF change piece image the wrong one was used setPiece(1, 7, "wk");
 		setPiece(0, 7, "wr");
 
 		setPiece(0, 0, "br");
