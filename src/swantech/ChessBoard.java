@@ -208,7 +208,7 @@ public class ChessBoard {
 
 		// What are the legal moves?
 		ArrayList<Square> squares = chessEngine.getLegalMoves(intSquare(row, col));
-		if (squares.size() == 0) { //AIF changed from squares == null
+		if (squares == null || squares.size() == 0) { //AIF changed from squares == null
             flashSquare(row, col);  // TODO: Does not work :: Works now Simon
         } else {
             // OK, there are legal moves from here, record this as a candidate and highlight the legal moves.
