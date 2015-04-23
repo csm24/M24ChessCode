@@ -1,5 +1,5 @@
 # ChessEngine project
-## My input to the Swansea University M24 MSc team development project to develop a Chess game.
+## Swansea University M24 MSc team development project to develop a Chess game.
 
 All Java (throughout the project) is under package **swantech**
 
