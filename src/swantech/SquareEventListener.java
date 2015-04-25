@@ -57,9 +57,10 @@ public class SquareEventListener implements ActionListener {
         GameBoard.getGameBoardInstance().unhighlightAll();
 
         // What are the legal moves?
-        ArrayList<Square> squares = GameBoard.getGameBoardInstance().getChessEngineInstance().getLegalMoves(intSquare(row, col));
+        //ArrayList<Square> squares = GameBoard.getGameBoardInstance().getChessEngineInstance().getLegalMoves(intSquare(row, col));
+        ArrayList<Square> squares = AppGame.GameInstance().getChessEngineInstance().getLegalMoves(intSquare(row, col));
         if (squares == null || squares.size() == 0) {
-            GameBoard.getGameBoardInstance().flashSquare(row, col);
+            GameBoard.getGameBoardInstance().FlashSquare(row, col);
         } else {
             // OK, there are legal moves from here, record this as a candidate and highlight the legal moves.
             candidateCol = col;
@@ -82,7 +83,8 @@ public class SquareEventListener implements ActionListener {
 
         r = 8-r;
         f++;
-        Square s = GameBoard.getGameBoardInstance().getChessEngineInstance().getChessSquare(r, f);
+        //Square s = GameBoard.getGameBoardInstance().getChessEngineInstance().getChessSquare(r, f);
+        Square s = AppGame.GameInstance().getChessEngineInstance().getChessSquare(r, f);
 
         return s;
     }
@@ -106,7 +108,8 @@ public class SquareEventListener implements ActionListener {
     private void makeBoardMove(int row, int col) {
         Square fromSquare = intSquare(candidateRow, candidateCol);
         Square toSquare = intSquare(row, col);
-        ChessEngineErrors ce = GameBoard.getGameBoardInstance().getChessEngineInstance().makeMyMove(fromSquare, toSquare);
+        //ChessEngineErrors ce = GameBoard.getGameBoardInstance().getChessEngineInstance().makeMyMove(fromSquare, toSquare);
+        ChessEngineErrors ce = AppGame.GameInstance().getChessEngineInstance().makeMyMove(fromSquare, toSquare);
 
         if (ce != ChessEngineErrors.OK){
             System.err.println("ChessBoard:makeBoardMove: Chess engine ERROR : " + ce.name());
@@ -125,7 +128,9 @@ public class SquareEventListener implements ActionListener {
      * Chess engine or network player
      */
     private void MakeOtherPlayerMove() {
-        ChessMove to = GameBoard.getGameBoardInstance().getChessEngineInstance().engineMove();
+        //ChessMove to = GameBoard.getGameBoardInstance().getChessEngineInstance().engineMove();
+        ChessMove to = AppGame.GameInstance().getChessEngineInstance().engineMove();
+
         //updateStatus(to);
         drawBoardMove(to.getOrigin(), to.getDestination());
     }
@@ -193,7 +198,8 @@ public class SquareEventListener implements ActionListener {
         String playerColour = to.isBlackMove()?"White":"Black";  // backwards deliberately!
         if (to.isCheckmate()) {
             // GAME OVER
-            Square kingSq = GameBoard.getGameBoardInstance().getChessEngineInstance().findPiece("King", playerColour);
+            //Square kingSq = GameBoard.getGameBoardInstance().getChessEngineInstance().findPiece("King", playerColour);
+            Square kingSq = AppGame.GameInstance().getChessEngineInstance().findPiece("King", playerColour);
             GameBoard.getGameBoardInstance().highlight(squareToRow(kingSq), squareToCol(kingSq), true);
             GameBoard.getGameBoardInstance().showBoardStatus("Game Over");
             System.out.println("CheckMate");
@@ -203,7 +209,8 @@ public class SquareEventListener implements ActionListener {
             GameBoard.getGameBoardInstance().showBoardStatus("CHECK!");
             System.out.println("Check");
             // find King?
-            Square kingSq = GameBoard.getGameBoardInstance().getChessEngineInstance().findPiece("King", playerColour);
+            //Square kingSq = GameBoard.getGameBoardInstance().getChessEngineInstance().findPiece("King", playerColour);
+            Square kingSq = AppGame.GameInstance().getChessEngineInstance().findPiece("King", playerColour);
             GameBoard.getGameBoardInstance().highlight(squareToRow(kingSq), squareToCol(kingSq), true);
         }
     }

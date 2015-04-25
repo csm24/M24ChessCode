@@ -115,8 +115,8 @@ public class ChessEngine {
             // keep for debugging - System.out.println("Working Directory = " + System.getProperty("user.dir"));
 
             //Uncomment one of the next two stockfish initialization depending on your OS
-            stockfish = new Stockfish("./engine/stockfish");  // create new stockfish interface IOS
-            //stockfish = new Stockfish("./engine/stockfish-6-32.exe");  // create new stockfish interface WINDOWS
+            //stockfish = new Stockfish("./engine/stockfish");  // create new stockfish interface IOS
+            stockfish = new Stockfish("./engine/stockfish-6-32.exe");  // create new stockfish interface WINDOWS
 
             if (!stockfish.startEngine()) {
                 LG.log(Level.SEVERE, "Cannot start StockFish chess engine");
@@ -139,7 +139,7 @@ public class ChessEngine {
 
     /**
      * Used to set the White and Black player names
-     * @param Colour, PlayColour.White or .Black
+     * @param c, PlayColour.White or .Black
      * @param firstName  eg Boris
      * @param lastName eg Spasky
      * @return error code, ChessEngineErrors.OK if all is well
@@ -341,7 +341,6 @@ public class ChessEngine {
         fen = words.get(0) + " " + words.get(1);
 
         return fen;
-
     }
 
     /**

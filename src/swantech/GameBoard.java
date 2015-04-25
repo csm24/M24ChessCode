@@ -11,21 +11,31 @@ import javax.swing.border.EmptyBorder;
 
 /**
  *
- * @author Moho, modified by Ifetayo
+ * @author Moho
+ * @author Ifetayo
  */
 public class GameBoard extends JFrame {
 
-    private static GameBoard gameBoard;
+    //private static GameBoard gameBoard;
     JPanel leftPanel;
     JPanel centerPanel;
     JPanel rightPanel;
+
+    private JMenuBar gameBar;
+    private JMenu gameMenu;
+    private JMenu profileMenu;
+
+    private JMenuItem startGameItem;
+    private JMenuItem endGameItem;
+
+    private JMenuItem newUserItem;
+    private JMenuItem listOfUsersItem;
 
     private static final JButton[][] chessBoardSquares = new JButton[8][8];  // Row, Col (but all wrong)
     private JPanel chessBoard;
     private static final String[] COLS = new String[]{"a","b","c","d","e","f","g", "h"};
     private static final int SQUARESIZE = 64;
     private static final String imageDir= "../res/";
-    private static ChessEngine chessEngine;
     private static PlayColour myColour;
     private static int candidateRow = 0, candidateCol = 0;
     private static JLabel statusLabel;
@@ -35,18 +45,12 @@ public class GameBoard extends JFrame {
     private JScrollPane scrollWhtHistory;
 
     private SquareEventListener squareEventListener;
+    private GameMenuActionListener gameMenuActionListener;
 
     public GameBoard(){
         super("Swantech Chess Game");
-        squareEventListener = new SquareEventListener();
-        try {
-            myColour = PlayColour.WHITE;
-            chessEngine = new ChessEngine(chessEngine.otherColour(myColour));  // tell chess engine what colour it is playing
-        } catch (Exception e){
-            System.err.println("Failed to initialse the chess engine, exiting");
-            System.err.println("Error is : " + e.getMessage());
-            System.exit(99);
-        }
+        SetTheme();
+        init();
     }
 
     /**
@@ -54,11 +58,7 @@ public class GameBoard extends JFrame {
      * @return
      */
     public static GameBoard getGameBoardInstance(){
-        return gameBoard;
-    }
-
-    public ChessEngine getChessEngineInstance(){
-        return chessEngine;
+        return AppGame.GameInstance().GetGameBoardInstance();
     }
 
     public static JButton getButtonSquare(int row, int col){
@@ -72,13 +72,69 @@ public class GameBoard extends JFrame {
         whtMoveHistory.append(text + "\n");
     }
 
+    private void ShowBoard(){
+        centerPanel.setVisible(true);
+    }
+
+    public void GameOptionsDialog(){
+        JPanel panel = new JPanel(new GridLayout(5,1));
+        JLabel label = new JLabel("Select Game Option");
+        ButtonGroup gameOptionBtnGroup = new ButtonGroup();
+        JRadioButton plyrCompRad = new JRadioButton("Play against computer");
+        plyrCompRad.setActionCommand("PvC");
+        JRadioButton twoPlyrRad = new JRadioButton("2 players");
+        twoPlyrRad.setActionCommand("PvP");
+        JRadioButton plyrNetwRad = new JRadioButton("Play against friend over network");
+        plyrNetwRad.setActionCommand("PvNP");
+        JRadioButton plyrCompNetRad = new JRadioButton("Play against computer over network");
+        plyrCompNetRad.setActionCommand("PvNC");
+
+        plyrCompRad.setSelected(true);
+        gameOptionBtnGroup.add(plyrCompRad);gameOptionBtnGroup.add(twoPlyrRad); gameOptionBtnGroup.add(plyrNetwRad);
+        gameOptionBtnGroup.add(plyrCompNetRad);
+        panel.add(label);
+        panel.add(plyrCompRad); panel.add(twoPlyrRad); panel.add(plyrNetwRad); panel.add(plyrCompNetRad);
+
+        String[] options = new String[]{"OK", "Cancel"};
+        int loginResult = 2;
+        int option = JOptionPane.showOptionDialog(this, panel, "Game Options",
+                JOptionPane.NO_OPTION, JOptionPane.INFORMATION_MESSAGE,
+                null, options, options[0]);
+
+        if(option == 0){ //the user has selected an option, now show the chess board so play can start
+            System.out.print(gameOptionBtnGroup.getSelection().getActionCommand());
+            ShowBoard();
+        }
+        else{
+            //close dialog and do nothing
+        }
+
+    }
+
     private void init(){
         Container contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
 
+        gameBar = new JMenuBar();
+        gameMenu = new JMenu("Game");
+        startGameItem = new JMenuItem("New game");
+        endGameItem = new JMenuItem("Exit");
+
+        gameMenuActionListener = new GameMenuActionListener();
+        squareEventListener = new SquareEventListener();
+
+        gameMenu.add(startGameItem);
+        gameMenu.add(endGameItem);
+        gameBar.add(gameMenu);
+
+        startGameItem.addActionListener(gameMenuActionListener);
+        endGameItem.addActionListener(gameMenuActionListener);
+
         leftPanel = new JPanel();
         centerPanel = new JPanel(new BorderLayout());
         rightPanel = new JPanel(new GridLayout(2,1));
+
+        centerPanel.setVisible(false);
 
         BuildLeftPanelDisplay();
         BuildCenterPanelDisplay();
@@ -90,6 +146,7 @@ public class GameBoard extends JFrame {
         contentPane.add(centerPanel, BorderLayout.CENTER);
         contentPane.add(rightPanel, BorderLayout.EAST);
 
+        setJMenuBar(gameBar);
         setSize(900, 700);
         setVisible(true);
     }
@@ -186,7 +243,7 @@ public class GameBoard extends JFrame {
     }
 
     /**
-     * This method initializes each chess piece on the chess board.
+     * This method resets each chess piece on the chess board.
      */
     public void resetPieces() {
         for (int i = 0; i < 8; i++) {
@@ -214,7 +271,7 @@ public class GameBoard extends JFrame {
     }
 
     /**
-     * This method sets a chess piece icon to square
+     * This method sets each chess piece icon to square
      * @param row int, row value of square piece to be set
      * @param col int, column value of square piece to be set
      * @param pieceName String, name of piece added e.g br (black rook)
@@ -250,29 +307,29 @@ public class GameBoard extends JFrame {
     }
 
     /**
-     * This method flashed the selected square when the selected piece on the selected square has not
+     * This method flashes the selected square when the selected piece on the selected square has not
      * valid move.
      * written by Ifetayo 23/4/2015
      * @param row int, row of the piece selected
      * @param col int, coloumn of the piece selected
      */
-    public void flashSquare(int row, int col) {
-        final JButton b = this.chessBoardSquares[row][col];
+    public void FlashSquare(int row, int col) {
+        final JButton pieceBtn = this.chessBoardSquares[row][col];
         Timer timer = new Timer(500, new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(b.getBackground().equals(Color.ORANGE)){
-                    b.setBackground(Color.GRAY);
+                if(pieceBtn.getBackground().equals(Color.ORANGE)){
+                    pieceBtn.setBackground(Color.GRAY);
                     ((Timer)e.getSource()).stop();
                 }
                 else{
-                    b.setBackground(Color.ORANGE);
+                    pieceBtn.setBackground(Color.ORANGE);
                 }
             }
         });
         timer.setInitialDelay(0);
         timer.start();
-        b.putClientProperty("highlighted", false);
+        pieceBtn.putClientProperty("highlighted", false);
     }
 
 
@@ -324,7 +381,7 @@ public class GameBoard extends JFrame {
         candidateRow = candidateCol = 0;
     }
 
-    public static void main(String[] args) {
+    public void SetTheme() {
 
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -348,15 +405,5 @@ public class GameBoard extends JFrame {
             java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
-        //ChessBoard ch = new ChessBoard();
-        // Never returns (until exit)
-        gameBoard = new GameBoard();
-        javax.swing.SwingUtilities.invokeLater(new Runnable(){
-            @Override
-            public void run() {
-                gameBoard.init();
-            }
-        });
     }
 }
