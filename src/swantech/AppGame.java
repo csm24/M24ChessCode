@@ -13,8 +13,8 @@ public class AppGame {
 
     private static GameBoard gameBoard;
     //int gameStatus; //todo should be an enum
-    //Profile blackPlayer;
-    //Profile whitePlayer;
+    Profile blackPlayer;
+    Profile whitePlayer;
     private static ChessEngine chessEngine;
     private static PlayColour myColour;
     private static AppGame appGame;
