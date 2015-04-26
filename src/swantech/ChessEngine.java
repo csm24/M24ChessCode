@@ -114,9 +114,14 @@ public class ChessEngine {
 
             // keep for debugging - System.out.println("Working Directory = " + System.getProperty("user.dir"));
 
-            //Uncomment one of the next two stockfish initialization depending on your OS
-            //stockfish = new Stockfish("./engine/stockfish");  // create new stockfish interface IOS
-            stockfish = new Stockfish("./engine/stockfish-6-32.exe");  // create new stockfish interface WINDOWS
+            String os = System.getProperty("os.name");
+
+            if (os.equals("Mac OS X")) {
+                stockfish = new Stockfish("./engine/stockfish");  // create new stockfish interface IOS
+            } else {
+                // TODO Ifetayo - get the exact Windows text and test here - obviously I cannot!
+                stockfish = new Stockfish("./engine/stockfish-6-32.exe");  // create new stockfish interface WINDOWS
+            }
 
             if (!stockfish.startEngine()) {
                 LG.log(Level.SEVERE, "Cannot start StockFish chess engine");
