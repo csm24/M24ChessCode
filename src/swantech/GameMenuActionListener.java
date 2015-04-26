@@ -15,7 +15,7 @@ public class GameMenuActionListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String cmd = new String((e.getActionCommand()));
-        if (cmd.equals("New Game")){
+        if (cmd.equals("New game")){
             GameBoard.getGameBoardInstance().GameOptionsDialog();//start game
         } else if (cmd.equals("Exit")){
             System.out.println("EXIT");
