@@ -11,7 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * A simple and efficient client to run Stockfish from Java
+ * A simple and efficient gameBoard to run Stockfish from Java
  * 
  * @author Rahul A R
  * Acknowledhgements to Rahul, this library has been renamed to package Swantech but otherwise unchanghed.
