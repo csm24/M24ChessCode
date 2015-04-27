@@ -66,6 +66,7 @@ public class GameBoard extends JFrame {
     }
 
     public void SetBlackHistory(String text){
+        // TODO SImon add call to here
         blkMoveHistory.append(text + "\n");
     }
     public void SetWhiteHistory(String text){
