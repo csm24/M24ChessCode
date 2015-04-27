@@ -130,8 +130,18 @@ public class SquareEventListener implements ActionListener {
     private void MakeOtherPlayerMove() {
         //ChessMove to = GameBoard.getGameBoardInstance().getChessEngineInstance().engineMove();
         ChessMove to = AppGame.GameInstance().getChessEngineInstance().engineMove();
+        Square kingSquare;
+        boolean isBlackMove = AppGame.GameInstance().getChessEngineInstance().board.isBlackMove();
+        if(to.isCheck() || to.isCheckmate()){
+            if(isBlackMove){
+                kingSquare = AppGame.GameInstance().getChessEngineInstance().FindKing("BLACK");
+            }
+            else{
+                kingSquare = AppGame.GameInstance().getChessEngineInstance().FindKing("WHITE");
+            }
+            GameBoard.getGameBoardInstance().FlashSquare(kingSquare.getFile(), kingSquare.getRank());
 
-
+        }
         //updateStatus(to);
         drawBoardMove(to.getOrigin(), to.getDestination());
     }

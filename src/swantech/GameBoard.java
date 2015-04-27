@@ -316,7 +316,7 @@ public class GameBoard extends JFrame {
      */
     public void FlashSquare(int row, int col) {
         final JButton pieceBtn = this.chessBoardSquares[row][col];
-        Timer timer = new Timer(500, new ActionListener(){
+        Timer timer = new Timer(900, new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(pieceBtn.getBackground().equals(Color.ORANGE)){
@@ -333,6 +333,24 @@ public class GameBoard extends JFrame {
         pieceBtn.putClientProperty("highlighted", false);
     }
 
+    /*public void FlashKing(int row, int col) {
+        final JButton pieceBtn = this.chessBoardSquares[row][col];
+        Timer timer = new Timer(1000, new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(pieceBtn.getBackground().equals(Color.ORANGE)){
+                    pieceBtn.setBackground(Color.GRAY);
+                    ((Timer)e.getSource()).stop();
+                }
+                else{
+                    pieceBtn.setBackground(Color.ORANGE);
+                }
+            }
+        });
+        timer.setInitialDelay(0);
+        timer.start();
+        pieceBtn.putClientProperty("highlighted", false);
+    }*/
 
     /**
      * Simple utility to set the background colour based on row and col.
