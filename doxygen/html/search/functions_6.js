@@ -1,7 +1,4 @@
 var searchData=
 [
-  ['sendcommand',['sendCommand',['../classswantech_1_1_stockfish.html#a0b971d0f645065262487fb597347d74f',1,'swantech::Stockfish']]],
-  ['setchessplayer',['setChessplayer',['../classswantech_1_1_chess_engine.html#aa5030a1e441c0868999509e35652636c',1,'swantech::ChessEngine']]],
-  ['startengine',['startEngine',['../classswantech_1_1_stockfish.html#a19ab1ebc8d457f5743443bebe8ddd252',1,'swantech::Stockfish']]],
-  ['stopengine',['stopEngine',['../classswantech_1_1_stockfish.html#af97e469fd321bac056aed5251caa7284',1,'swantech::Stockfish']]]
+  ['highlight',['highlight',['../classswantech_1_1_game_board.html#a77b64cccf5aaa809b608c4a8de53ccd9',1,'swantech::GameBoard']]]
 ];

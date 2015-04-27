@@ -1,0 +1,13 @@
+digraph "swantech.AppGame.GetGameBoardInstance"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="swantech.AppGame.GetGame\lBoardInstance",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="swantech.GameBoard.getGame\lBoardInstance",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classswantech_1_1_game_board.html#adf68d07f448466b7cea27014ba5f40b4"];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="swantech.GameMenuActionListener.action\lPerformed",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classswantech_1_1_game_menu_action_listener.html#a73c3d1d1aee78576d66bae3ca512e514"];
+  Node2 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="swantech.SquareEventListener.\lRemovePiece",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classswantech_1_1_square_event_listener.html#a20ec344e232ddf50aaf2ecac0d26587e"];
+}

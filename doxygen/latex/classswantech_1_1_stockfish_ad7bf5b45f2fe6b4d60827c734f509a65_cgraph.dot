@@ -1,0 +1,12 @@
+digraph "swantech.Stockfish.getEvalScore"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="swantech.Stockfish.getEval\lScore",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid"];
+  Node2 [label="swantech.Stockfish.sendCommand",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classswantech_1_1_stockfish.html#a0b971d0f645065262487fb597347d74f"];
+  Node1 -> Node3 [color="midnightblue",fontsize="10",style="solid"];
+  Node3 [label="swantech.Stockfish.getOutput",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classswantech_1_1_stockfish.html#ae3766542f6513e9108d6e9ac0f6ea26b"];
+  Node3 -> Node2 [color="midnightblue",fontsize="10",style="solid"];
+}

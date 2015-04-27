@@ -85,9 +85,7 @@ public class ChessEngine {
             }
 
         }
-
        return s;
-
     }
 
 
@@ -263,6 +261,10 @@ public class ChessEngine {
             Move m = new ChessMove((ictk.boardgame.chess.ChessBoard) board, startSquare.getFile(), startSquare.getRank(), endSquare.getFile(), endSquare.getRank());
             if (m.isLegal()) {
                 history.add(m);  // This executes the move, and records it in history
+
+                PlayColour pc = board.isBlackMove()?PlayColour.WHITE:PlayColour.BLACK;
+                setGameHistory(pc, m);
+
             } else {
                 LG.log(Level.SEVERE, "makeMyMove Illegal move : " + m.toString());
                 throw new IllegalMoveException("ChessEngine:makeAMove ChessMove was illegal : " + m.toString());
@@ -304,8 +306,8 @@ public class ChessEngine {
         }
         startSquare.setPiece(p);
         try {
-            PlayColour c = board.isBlackMove() ? PlayColour.BLACK : PlayColour.WHITE;
-            if ((!EnginePlaying && (c == engineColour)) || (EnginePlaying && (c != engineColour)))
+            PlayColour playColour = board.isBlackMove() ? PlayColour.BLACK : PlayColour.WHITE;
+            if ((!EnginePlaying && (playColour == engineColour)) || (EnginePlaying && (playColour != engineColour)))
             {
                 // WRONG colour, whether player or engine move
                 String who = EnginePlaying ? "Engine" : "Player";
@@ -313,7 +315,7 @@ public class ChessEngine {
                 return ChessEngineErrors.WRONG_COLOUR;
             }
 
-            Move m = makeAMove(startSquare, endSquare); // The ICTK method that does the work
+            Move currentMove = makeAMove(startSquare, endSquare); // The ICTK method that does the work
 
         } catch (Exception e) {
             LG.log(Level.SEVERE, "ChessEngine makeMyMove FAILED");
@@ -322,6 +324,17 @@ public class ChessEngine {
         }
 
         return ChessEngineErrors.OK;
+    }
+
+    void setGameHistory(PlayColour c, Move currentMove) {
+        AppGame appGame = AppGame.GameInstance();
+        GameBoard gameBoard = appGame.GetGameBoardInstance();
+
+        if (c == PlayColour.BLACK){
+            gameBoard.SetBlackHistory(currentMove.toString());
+        } else {
+            gameBoard.SetWhiteHistory(currentMove.toString());
+        }
     }
 
     /**

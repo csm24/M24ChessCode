@@ -1,0 +1,89 @@
+\hypertarget{classswantech_1_1_app_game}{}\section{swantech.\+App\+Game Class Reference}
+\label{classswantech_1_1_app_game}\index{swantech.\+App\+Game@{swantech.\+App\+Game}}
+
+
+Collaboration diagram for swantech.\+App\+Game\+:
+% FIG 0
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classswantech_1_1_game_board}{Game\+Board} \hyperlink{classswantech_1_1_app_game_a9751af8444b8e7701201545bb84737ba}{Get\+Game\+Board\+Instance} ()
+\item 
+\hyperlink{classswantech_1_1_chess_engine}{Chess\+Engine} \hyperlink{classswantech_1_1_app_game_ab4cc6220fbfbc5497b292035e0d95436}{get\+Chess\+Engine\+Instance} ()
+\item 
+void \hyperlink{classswantech_1_1_app_game_ab01ef73e8ce1e2b21a58daad0ad535a1}{Show\+Game\+Display} ()
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{classswantech_1_1_app_game}{App\+Game} \hyperlink{classswantech_1_1_app_game_a787d970e7a546bb0aabd34b7d7d43358}{Game\+Instance} ()
+\item 
+\hypertarget{classswantech_1_1_app_game_ae4539dec0adb6828afdbdbb8662e4d1d}{}static void {\bfseries main} (String\mbox{[}$\,$\mbox{]} args)\label{classswantech_1_1_app_game_ae4539dec0adb6828afdbdbb8662e4d1d}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This is the main application class. This class handles each game. It provides a game\textquotesingle{}s instances such as the board ~\newline
+ instance and the chess engine instance. \begin{DoxyAuthor}{Author}
+Ifetayo 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classswantech_1_1_app_game_a787d970e7a546bb0aabd34b7d7d43358}{}\index{swantech\+::\+App\+Game@{swantech\+::\+App\+Game}!Game\+Instance@{Game\+Instance}}
+\index{Game\+Instance@{Game\+Instance}!swantech\+::\+App\+Game@{swantech\+::\+App\+Game}}
+\subsubsection[{Game\+Instance}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf App\+Game} swantech.\+App\+Game.\+Game\+Instance (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classswantech_1_1_app_game_a787d970e7a546bb0aabd34b7d7d43358}
+Return the instance of the running game \begin{DoxyReturn}{Returns}
+\hyperlink{classswantech_1_1_app_game}{App\+Game} reference object 
+\end{DoxyReturn}
+
+
+Here is the caller graph for this function\+:
+% FIG 1
+
+
+\hypertarget{classswantech_1_1_app_game_ab4cc6220fbfbc5497b292035e0d95436}{}\index{swantech\+::\+App\+Game@{swantech\+::\+App\+Game}!get\+Chess\+Engine\+Instance@{get\+Chess\+Engine\+Instance}}
+\index{get\+Chess\+Engine\+Instance@{get\+Chess\+Engine\+Instance}!swantech\+::\+App\+Game@{swantech\+::\+App\+Game}}
+\subsubsection[{get\+Chess\+Engine\+Instance}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Chess\+Engine} swantech.\+App\+Game.\+get\+Chess\+Engine\+Instance (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classswantech_1_1_app_game_ab4cc6220fbfbc5497b292035e0d95436}
+Return a reference to the chess engine \begin{DoxyReturn}{Returns}
+\hyperlink{classswantech_1_1_chess_engine}{Chess\+Engine} 
+\end{DoxyReturn}
+\hypertarget{classswantech_1_1_app_game_a9751af8444b8e7701201545bb84737ba}{}\index{swantech\+::\+App\+Game@{swantech\+::\+App\+Game}!Get\+Game\+Board\+Instance@{Get\+Game\+Board\+Instance}}
+\index{Get\+Game\+Board\+Instance@{Get\+Game\+Board\+Instance}!swantech\+::\+App\+Game@{swantech\+::\+App\+Game}}
+\subsubsection[{Get\+Game\+Board\+Instance}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Game\+Board} swantech.\+App\+Game.\+Get\+Game\+Board\+Instance (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classswantech_1_1_app_game_a9751af8444b8e7701201545bb84737ba}
+Return the reference to the running Game Board instance \begin{DoxyReturn}{Returns}
+\hyperlink{classswantech_1_1_game_board}{Game\+Board} reference object 
+\end{DoxyReturn}
+
+
+Here is the caller graph for this function\+:
+% FIG 2
+
+
+\hypertarget{classswantech_1_1_app_game_ab01ef73e8ce1e2b21a58daad0ad535a1}{}\index{swantech\+::\+App\+Game@{swantech\+::\+App\+Game}!Show\+Game\+Display@{Show\+Game\+Display}}
+\index{Show\+Game\+Display@{Show\+Game\+Display}!swantech\+::\+App\+Game@{swantech\+::\+App\+Game}}
+\subsubsection[{Show\+Game\+Display}]{\setlength{\rightskip}{0pt plus 5cm}void swantech.\+App\+Game.\+Show\+Game\+Display (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classswantech_1_1_app_game_ab01ef73e8ce1e2b21a58daad0ad535a1}
+Show the game display ~\newline
+ The application does nothing for now ~\newline
+ 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/simon/\+M\+Sc/\+M24\+\_\+\+S\+W\+\_\+\+Team\+\_\+\+Project/git/\+V1/src/swantech/App\+Game.\+java\end{DoxyCompactItemize}

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['whosemove',['whoseMove',['../classswantech_1_1_chess_engine.html#ae6976be646e833558d31d2e3bf242773',1,'swantech::ChessEngine']]]
+  ['isblack',['isBlack',['../enumswantech_1_1_play_colour.html#a71e40bb31f1a18df766f25de60200150',1,'swantech::PlayColour']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['drawboard',['drawBoard',['../classswantech_1_1_stockfish.html#a15ce41395a20cc5be33df45b527de904',1,'swantech::Stockfish']]]
+  ['chessengine',['ChessEngine',['../classswantech_1_1_chess_engine.html#a206b7f60195b050af7bf73124a359bd5',1,'swantech::ChessEngine']]]
 ];

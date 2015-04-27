@@ -1,4 +1,4 @@
-digraph "src/swantech" {
+digraph "/Users/simon/MSc/M24_SW_Team_Project/git/V1/src/swantech" {
   compound=true
   node [ fontsize="10", fontname="Helvetica"];
   edge [ labelfontsize="10", labelfontname="Helvetica"];

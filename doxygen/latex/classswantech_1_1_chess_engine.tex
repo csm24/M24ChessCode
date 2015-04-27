@@ -14,6 +14,8 @@ Makes extensive use of I\+C\+T\+K library, released under the G\+N\+U G\+P\+L li
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
+Square \hyperlink{classswantech_1_1_chess_engine_aa9586accdd914705d51e7f2097f57355}{find\+Piece} (String name, String colour)
+\item 
 \hyperlink{classswantech_1_1_chess_engine_a206b7f60195b050af7bf73124a359bd5}{Chess\+Engine} (\hyperlink{enumswantech_1_1_play_colour}{Play\+Colour} new\+Engine\+Colour)  throws Exception     
 \item 
 \hyperlink{enumswantech_1_1_chess_engine_errors}{Chess\+Engine\+Errors} \hyperlink{classswantech_1_1_chess_engine_aa5030a1e441c0868999509e35652636c}{set\+Chessplayer} (\hyperlink{enumswantech_1_1_play_colour}{Play\+Colour} c, String first\+Name, String last\+Name)
@@ -22,15 +24,22 @@ Array\+List$<$ Square $>$ \hyperlink{classswantech_1_1_chess_engine_a529858ea407
 \item 
 Chess\+Piece \hyperlink{classswantech_1_1_chess_engine_ad09f3dd52a728a42cdb1515e7104f03e}{get\+Piece\+At} (Square sq)
 \item 
+Square \hyperlink{classswantech_1_1_chess_engine_a67cbcb3acff7c6e81281433bfcab6f9d}{get\+Chess\+Square} (int rank, int file)
+\item 
 \hyperlink{enumswantech_1_1_play_colour}{Play\+Colour} \hyperlink{classswantech_1_1_chess_engine_ae6976be646e833558d31d2e3bf242773}{whose\+Move} ()
 \item 
 \hyperlink{enumswantech_1_1_chess_engine_errors}{Chess\+Engine\+Errors} \hyperlink{classswantech_1_1_chess_engine_a0e8106f504de2a1cec26d523865c3d02}{make\+My\+Move} (Square start\+Square, Square end\+Square)
 \item 
 String \hyperlink{classswantech_1_1_chess_engine_a06277d63732bbc472ad1a61e0f5e5ae8}{get\+Game\+F\+E\+N} ()
 \item 
-Chess\+Board \hyperlink{classswantech_1_1_chess_engine_aff2e5a7749c5e48afdbe544b879454fa}{get\+Chess\+Board} ()
+ictk.\+boardgame.\+chess.\+Chess\+Board \hyperlink{classswantech_1_1_chess_engine_a5da88bbf80cf6d33938067237b10f44c}{get\+Chess\+Board} ()
 \item 
 Chess\+Move \hyperlink{classswantech_1_1_chess_engine_a4e2edbbc872baf9bd0f180a132090584}{engine\+Move} ()
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{enumswantech_1_1_play_colour}{Play\+Colour} \hyperlink{classswantech_1_1_chess_engine_a7648685bcb41ac4cf391c39cbccef90a}{other\+Colour} (\hyperlink{enumswantech_1_1_play_colour}{Play\+Colour} this\+Colour)
 \end{DoxyCompactItemize}
 
 
@@ -75,15 +84,44 @@ T\+H\+E B\+I\+G O\+N\+E, ask the engine to make a move!
 \begin{DoxyReturn}{Returns}
 the Chess\+Move made, i.\+e. the engine-\/controlled piece with before and after . N\+O\+T\+E that methods on Chess\+Move provide all the necessary ionformation for continuing play, such as is\+Check, is\+Check\+Mate() 
 \end{DoxyReturn}
-\hypertarget{classswantech_1_1_chess_engine_aff2e5a7749c5e48afdbe544b879454fa}{}\index{swantech\+::\+Chess\+Engine@{swantech\+::\+Chess\+Engine}!get\+Chess\+Board@{get\+Chess\+Board}}
+\hypertarget{classswantech_1_1_chess_engine_aa9586accdd914705d51e7f2097f57355}{}\index{swantech\+::\+Chess\+Engine@{swantech\+::\+Chess\+Engine}!find\+Piece@{find\+Piece}}
+\index{find\+Piece@{find\+Piece}!swantech\+::\+Chess\+Engine@{swantech\+::\+Chess\+Engine}}
+\subsubsection[{find\+Piece}]{\setlength{\rightskip}{0pt plus 5cm}Square swantech.\+Chess\+Engine.\+find\+Piece (
+\begin{DoxyParamCaption}
+\item[{String}]{name, }
+\item[{String}]{colour}
+\end{DoxyParamCaption}
+)}\label{classswantech_1_1_chess_engine_aa9586accdd914705d51e7f2097f57355}
+Finds the square for a piece, or null if not on board \begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{classswantech_1_1_chess_engine_a5da88bbf80cf6d33938067237b10f44c}{}\index{swantech\+::\+Chess\+Engine@{swantech\+::\+Chess\+Engine}!get\+Chess\+Board@{get\+Chess\+Board}}
 \index{get\+Chess\+Board@{get\+Chess\+Board}!swantech\+::\+Chess\+Engine@{swantech\+::\+Chess\+Engine}}
-\subsubsection[{get\+Chess\+Board}]{\setlength{\rightskip}{0pt plus 5cm}Chess\+Board swantech.\+Chess\+Engine.\+get\+Chess\+Board (
+\subsubsection[{get\+Chess\+Board}]{\setlength{\rightskip}{0pt plus 5cm}ictk.\+boardgame.\+chess.\+Chess\+Board swantech.\+Chess\+Engine.\+get\+Chess\+Board (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}\label{classswantech_1_1_chess_engine_aff2e5a7749c5e48afdbe544b879454fa}
+)}\label{classswantech_1_1_chess_engine_a5da88bbf80cf6d33938067237b10f44c}
 \begin{DoxyReturn}{Returns}
 current Chess\+Board 
+\end{DoxyReturn}
+\hypertarget{classswantech_1_1_chess_engine_a67cbcb3acff7c6e81281433bfcab6f9d}{}\index{swantech\+::\+Chess\+Engine@{swantech\+::\+Chess\+Engine}!get\+Chess\+Square@{get\+Chess\+Square}}
+\index{get\+Chess\+Square@{get\+Chess\+Square}!swantech\+::\+Chess\+Engine@{swantech\+::\+Chess\+Engine}}
+\subsubsection[{get\+Chess\+Square}]{\setlength{\rightskip}{0pt plus 5cm}Square swantech.\+Chess\+Engine.\+get\+Chess\+Square (
+\begin{DoxyParamCaption}
+\item[{int}]{rank, }
+\item[{int}]{file}
+\end{DoxyParamCaption}
+)}\label{classswantech_1_1_chess_engine_a67cbcb3acff7c6e81281433bfcab6f9d}
+Gets a populate board square for the rank and fiule 
+\begin{DoxyParams}{Parameters}
+{\em rank} & Chess board \textquotesingle{}row\textquotesingle{}, 1..8, 1 is White pieces, 2 is white pawns, 7 is black pawns, 8 is black pieces \\
+\hline
+{\em file} & 1..8 Left to Right \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a Square, including any piece on it 
 \end{DoxyReturn}
 \hypertarget{classswantech_1_1_chess_engine_a06277d63732bbc472ad1a61e0f5e5ae8}{}\index{swantech\+::\+Chess\+Engine@{swantech\+::\+Chess\+Engine}!get\+Game\+F\+E\+N@{get\+Game\+F\+E\+N}}
 \index{get\+Game\+F\+E\+N@{get\+Game\+F\+E\+N}!swantech\+::\+Chess\+Engine@{swantech\+::\+Chess\+Engine}}
@@ -153,6 +191,21 @@ Used by the \textquotesingle{}Other\textquotesingle{} player, not this \hyperlin
 \begin{DoxyReturn}{Returns}
 \hyperlink{enumswantech_1_1_chess_engine_errors}{Chess\+Engine\+Errors}, O\+K if all good. 
 \end{DoxyReturn}
+\hypertarget{classswantech_1_1_chess_engine_a7648685bcb41ac4cf391c39cbccef90a}{}\index{swantech\+::\+Chess\+Engine@{swantech\+::\+Chess\+Engine}!other\+Colour@{other\+Colour}}
+\index{other\+Colour@{other\+Colour}!swantech\+::\+Chess\+Engine@{swantech\+::\+Chess\+Engine}}
+\subsubsection[{other\+Colour}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Play\+Colour} swantech.\+Chess\+Engine.\+other\+Colour (
+\begin{DoxyParamCaption}
+\item[{{\bf Play\+Colour}}]{this\+Colour}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classswantech_1_1_chess_engine_a7648685bcb41ac4cf391c39cbccef90a}
+
+\begin{DoxyParams}{Parameters}
+{\em this\+Colour} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The other colour eg other\+Colour(Play\+Colour.\+B\+L\+A\+C\+K) returns Play\+Colour.\+W\+H\+I\+T\+E 
+\end{DoxyReturn}
 \hypertarget{classswantech_1_1_chess_engine_aa5030a1e441c0868999509e35652636c}{}\index{swantech\+::\+Chess\+Engine@{swantech\+::\+Chess\+Engine}!set\+Chessplayer@{set\+Chessplayer}}
 \index{set\+Chessplayer@{set\+Chessplayer}!swantech\+::\+Chess\+Engine@{swantech\+::\+Chess\+Engine}}
 \subsubsection[{set\+Chessplayer}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Chess\+Engine\+Errors} swantech.\+Chess\+Engine.\+set\+Chessplayer (
@@ -164,7 +217,7 @@ Used by the \textquotesingle{}Other\textquotesingle{} player, not this \hyperlin
 )}\label{classswantech_1_1_chess_engine_aa5030a1e441c0868999509e35652636c}
 Used to set the White and Black player names 
 \begin{DoxyParams}{Parameters}
-{\em Colour,Play\+Colour.\+White} & or .Black \\
+{\em c,Play\+Colour.\+White} & or .Black \\
 \hline
 {\em first\+Name} & eg Boris \\
 \hline

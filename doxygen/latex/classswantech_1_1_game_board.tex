@@ -1,0 +1,146 @@
+\hypertarget{classswantech_1_1_game_board}{}\section{swantech.\+Game\+Board Class Reference}
+\label{classswantech_1_1_game_board}\index{swantech.\+Game\+Board@{swantech.\+Game\+Board}}
+Inheritance diagram for swantech.\+Game\+Board\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classswantech_1_1_game_board}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classswantech_1_1_game_board_a96ebddb815846afa4c27770196677e93}{}void {\bfseries Set\+Black\+History} (String text)\label{classswantech_1_1_game_board_a96ebddb815846afa4c27770196677e93}
+
+\item 
+\hypertarget{classswantech_1_1_game_board_ad3af6eb08224d1765b3d7d350b35235e}{}void {\bfseries Set\+White\+History} (String text)\label{classswantech_1_1_game_board_ad3af6eb08224d1765b3d7d350b35235e}
+
+\item 
+\hypertarget{classswantech_1_1_game_board_a0c035906eeeb258acfaa8b5d55d0ca0f}{}void {\bfseries Game\+Options\+Dialog} ()\label{classswantech_1_1_game_board_a0c035906eeeb258acfaa8b5d55d0ca0f}
+
+\item 
+void \hyperlink{classswantech_1_1_game_board_a8b593a2b2e1f7ace526aaeceaef99724}{reset\+Pieces} ()
+\item 
+void \hyperlink{classswantech_1_1_game_board_add61d2ac401b20f5f847ca0e96c9caa5}{set\+Piece} (int row, int col, String piece\+Name)
+\item 
+void \hyperlink{classswantech_1_1_game_board_aa19d65d287fdbcc49088dfe04b1d02d8}{show\+Board\+Status} (String status)
+\item 
+void \hyperlink{classswantech_1_1_game_board_a37481f0e2444ee2e092edc3e714382bc}{Flash\+Square} (int row, int col)
+\item 
+void \hyperlink{classswantech_1_1_game_board_a77b64cccf5aaa809b608c4a8de53ccd9}{highlight} (int row, int col, boolean highlight)
+\item 
+void \hyperlink{classswantech_1_1_game_board_aaa24ba8f39f0246860a47641f71a6ddf}{unhighlight\+All} ()
+\item 
+\hypertarget{classswantech_1_1_game_board_a0a4e857cfd4b2a7a1b9ac6fa9073a968}{}void {\bfseries Set\+Theme} ()\label{classswantech_1_1_game_board_a0a4e857cfd4b2a7a1b9ac6fa9073a968}
+
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{classswantech_1_1_game_board}{Game\+Board} \hyperlink{classswantech_1_1_game_board_adf68d07f448466b7cea27014ba5f40b4}{get\+Game\+Board\+Instance} ()
+\item 
+\hypertarget{classswantech_1_1_game_board_a680b7fcb3fffd63e95e7242e71ae079f}{}static J\+Button {\bfseries get\+Button\+Square} (int row, int col)\label{classswantech_1_1_game_board_a680b7fcb3fffd63e95e7242e71ae079f}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyAuthor}{Author}
+Moho 
+
+Ifetayo 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classswantech_1_1_game_board_a37481f0e2444ee2e092edc3e714382bc}{}\index{swantech\+::\+Game\+Board@{swantech\+::\+Game\+Board}!Flash\+Square@{Flash\+Square}}
+\index{Flash\+Square@{Flash\+Square}!swantech\+::\+Game\+Board@{swantech\+::\+Game\+Board}}
+\subsubsection[{Flash\+Square}]{\setlength{\rightskip}{0pt plus 5cm}void swantech.\+Game\+Board.\+Flash\+Square (
+\begin{DoxyParamCaption}
+\item[{int}]{row, }
+\item[{int}]{col}
+\end{DoxyParamCaption}
+)}\label{classswantech_1_1_game_board_a37481f0e2444ee2e092edc3e714382bc}
+This method flashes the selected square when the selected piece on the selected square has not valid move. written by Ifetayo 23/4/2015 
+\begin{DoxyParams}{Parameters}
+{\em row} & int, row of the piece selected \\
+\hline
+{\em col} & int, coloumn of the piece selected \\
+\hline
+\end{DoxyParams}
+\hypertarget{classswantech_1_1_game_board_adf68d07f448466b7cea27014ba5f40b4}{}\index{swantech\+::\+Game\+Board@{swantech\+::\+Game\+Board}!get\+Game\+Board\+Instance@{get\+Game\+Board\+Instance}}
+\index{get\+Game\+Board\+Instance@{get\+Game\+Board\+Instance}!swantech\+::\+Game\+Board@{swantech\+::\+Game\+Board}}
+\subsubsection[{get\+Game\+Board\+Instance}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Game\+Board} swantech.\+Game\+Board.\+get\+Game\+Board\+Instance (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classswantech_1_1_game_board_adf68d07f448466b7cea27014ba5f40b4}
+Game board instance T\+O\+D\+O check for null \begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{classswantech_1_1_game_board_a77b64cccf5aaa809b608c4a8de53ccd9}{}\index{swantech\+::\+Game\+Board@{swantech\+::\+Game\+Board}!highlight@{highlight}}
+\index{highlight@{highlight}!swantech\+::\+Game\+Board@{swantech\+::\+Game\+Board}}
+\subsubsection[{highlight}]{\setlength{\rightskip}{0pt plus 5cm}void swantech.\+Game\+Board.\+highlight (
+\begin{DoxyParamCaption}
+\item[{int}]{row, }
+\item[{int}]{col, }
+\item[{boolean}]{highlight}
+\end{DoxyParamCaption}
+)}\label{classswantech_1_1_game_board_a77b64cccf5aaa809b608c4a8de53ccd9}
+Highlights or unhighlights a given square 
+\begin{DoxyParams}{Parameters}
+{\em row,0} & -\/ 7 \\
+\hline
+{\em col,0} & -\/ 7 \\
+\hline
+{\em highlight} & \\
+\hline
+\end{DoxyParams}
+\hypertarget{classswantech_1_1_game_board_a8b593a2b2e1f7ace526aaeceaef99724}{}\index{swantech\+::\+Game\+Board@{swantech\+::\+Game\+Board}!reset\+Pieces@{reset\+Pieces}}
+\index{reset\+Pieces@{reset\+Pieces}!swantech\+::\+Game\+Board@{swantech\+::\+Game\+Board}}
+\subsubsection[{reset\+Pieces}]{\setlength{\rightskip}{0pt plus 5cm}void swantech.\+Game\+Board.\+reset\+Pieces (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classswantech_1_1_game_board_a8b593a2b2e1f7ace526aaeceaef99724}
+This method resets each chess piece on the chess board. \hypertarget{classswantech_1_1_game_board_add61d2ac401b20f5f847ca0e96c9caa5}{}\index{swantech\+::\+Game\+Board@{swantech\+::\+Game\+Board}!set\+Piece@{set\+Piece}}
+\index{set\+Piece@{set\+Piece}!swantech\+::\+Game\+Board@{swantech\+::\+Game\+Board}}
+\subsubsection[{set\+Piece}]{\setlength{\rightskip}{0pt plus 5cm}void swantech.\+Game\+Board.\+set\+Piece (
+\begin{DoxyParamCaption}
+\item[{int}]{row, }
+\item[{int}]{col, }
+\item[{String}]{piece\+Name}
+\end{DoxyParamCaption}
+)}\label{classswantech_1_1_game_board_add61d2ac401b20f5f847ca0e96c9caa5}
+This method sets each chess piece icon to square 
+\begin{DoxyParams}{Parameters}
+{\em row} & int, row value of square piece to be set \\
+\hline
+{\em col} & int, column value of square piece to be set \\
+\hline
+{\em piece\+Name} & String, name of piece added e.\+g br (black rook) \\
+\hline
+\end{DoxyParams}
+\hypertarget{classswantech_1_1_game_board_aa19d65d287fdbcc49088dfe04b1d02d8}{}\index{swantech\+::\+Game\+Board@{swantech\+::\+Game\+Board}!show\+Board\+Status@{show\+Board\+Status}}
+\index{show\+Board\+Status@{show\+Board\+Status}!swantech\+::\+Game\+Board@{swantech\+::\+Game\+Board}}
+\subsubsection[{show\+Board\+Status}]{\setlength{\rightskip}{0pt plus 5cm}void swantech.\+Game\+Board.\+show\+Board\+Status (
+\begin{DoxyParamCaption}
+\item[{String}]{status}
+\end{DoxyParamCaption}
+)}\label{classswantech_1_1_game_board_aa19d65d287fdbcc49088dfe04b1d02d8}
+Updates the board status text field 
+\begin{DoxyParams}{Parameters}
+{\em status} & -\/ text to be shown \\
+\hline
+\end{DoxyParams}
+\hypertarget{classswantech_1_1_game_board_aaa24ba8f39f0246860a47641f71a6ddf}{}\index{swantech\+::\+Game\+Board@{swantech\+::\+Game\+Board}!unhighlight\+All@{unhighlight\+All}}
+\index{unhighlight\+All@{unhighlight\+All}!swantech\+::\+Game\+Board@{swantech\+::\+Game\+Board}}
+\subsubsection[{unhighlight\+All}]{\setlength{\rightskip}{0pt plus 5cm}void swantech.\+Game\+Board.\+unhighlight\+All (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classswantech_1_1_game_board_aaa24ba8f39f0246860a47641f71a6ddf}
+Shorthand utility, remove all highlighting 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/simon/\+M\+Sc/\+M24\+\_\+\+S\+W\+\_\+\+Team\+\_\+\+Project/git/\+V1/src/swantech/Game\+Board.\+java\end{DoxyCompactItemize}

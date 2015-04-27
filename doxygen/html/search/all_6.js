@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['ok',['OK',['../enumswantech_1_1_chess_engine_errors.html#a6e26430f10fe122419147d156b9c15f2',1,'swantech::ChessEngineErrors']]]
+  ['highlight',['highlight',['../classswantech_1_1_game_board.html#a77b64cccf5aaa809b608c4a8de53ccd9',1,'swantech::GameBoard']]]
 ];

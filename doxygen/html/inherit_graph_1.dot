@@ -1,0 +1,7 @@
+digraph "Graphical Class Hierarchy"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="swantech.ChessEngine",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classswantech_1_1_chess_engine.html",tooltip="ChessEngine provides an interface to a chess engine such as StockFish. The ChessEngine is run as a de..."];
+}

@@ -1,4 +1,4 @@
-digraph "src" {
+digraph "/Users/simon/MSc/M24_SW_Team_Project/git/V1/src" {
   compound=true
   node [ fontsize="10", fontname="Helvetica"];
   edge [ labelfontsize="10", labelfontname="Helvetica"];
