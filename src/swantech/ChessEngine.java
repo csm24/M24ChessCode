@@ -10,11 +10,6 @@ import ictk.boardgame.*;
 import ictk.boardgame.chess.*;
 import ictk.boardgame.chess.io.FEN;
 import sun.swing.text.html.FrameEditorPaneTag;
-
-
-// TODO put enums in this class?
-
-
 import static ictk.boardgame.chess.io.FEN.*;
 
 /**
