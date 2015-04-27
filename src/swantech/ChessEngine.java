@@ -411,7 +411,8 @@ public class ChessEngine {
             }
 
             // The big one, calculate a move
-            responses = askStockfish("go", 250);  // TODO reduce 2000 ??
+            // TODO: unreliable?
+            responses = askStockfish("go", 2500);  // TODO reduce 2000 ??
             // Should get several lines, last one is important and says eg:
             // bestmove g1f3 ponder d7d5 -
             // check words(0) == bestmove, and if ok, use words(1) for the move

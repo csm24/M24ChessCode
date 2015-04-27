@@ -131,6 +131,7 @@ public class SquareEventListener implements ActionListener {
         //ChessMove to = GameBoard.getGameBoardInstance().getChessEngineInstance().engineMove();
         ChessMove to = AppGame.GameInstance().getChessEngineInstance().engineMove();
 
+
         //updateStatus(to);
         drawBoardMove(to.getOrigin(), to.getDestination());
     }
