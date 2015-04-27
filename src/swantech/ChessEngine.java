@@ -9,6 +9,7 @@ import java.util.logging.*;
 import ictk.boardgame.*;
 import ictk.boardgame.chess.*;
 import ictk.boardgame.chess.io.FEN;
+import sun.swing.text.html.FrameEditorPaneTag;
 
 
 // TODO put enums in this class?
@@ -88,6 +89,12 @@ public class ChessEngine {
        return s;
 
     }
+
+
+
+
+
+
     /**
      * Default constructor. Sets up a new board with standard starting position
      * Starts the Stockfish engine.
