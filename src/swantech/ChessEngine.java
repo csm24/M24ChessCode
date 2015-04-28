@@ -83,7 +83,6 @@ public class ChessEngine {
             if ((p != null) && (p.isKing())){
                 return s;
             }
-
         }
        return s;
     }

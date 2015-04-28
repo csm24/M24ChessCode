@@ -21,6 +21,7 @@ public class GameBoard extends JFrame {
     JPanel centerPanel;
     JPanel rightPanel;
 
+    private static Timer checkTimer;
     private JMenuBar gameBar;
     private JMenu gameMenu;
     private JMenu profileMenu;
@@ -333,24 +334,30 @@ public class GameBoard extends JFrame {
         pieceBtn.putClientProperty("highlighted", false);
     }
 
-    /*public void FlashKing(int row, int col) {
-        final JButton pieceBtn = this.chessBoardSquares[row][col];
-        Timer timer = new Timer(1000, new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(pieceBtn.getBackground().equals(Color.ORANGE)){
-                    pieceBtn.setBackground(Color.GRAY);
-                    ((Timer)e.getSource()).stop();
+    public void FlashKing(final JButton pieceBtn, int timerFlag) {
+        //final JButton pieceBtn = this.chessBoardSquares[row][col];
+        if(timerFlag == 0 && checkTimer != null){
+            checkTimer.stop();
+            checkTimer = null;
+        }
+        else if(timerFlag == 1 && checkTimer == null){
+            checkTimer = new Timer(900, new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if(pieceBtn.getBackground().equals(Color.RED)){
+                        pieceBtn.setBackground(Color.GRAY);
+                    }
+                    else{
+                        pieceBtn.setBackground(Color.RED);
+                    }
                 }
-                else{
-                    pieceBtn.setBackground(Color.ORANGE);
-                }
-            }
-        });
-        timer.setInitialDelay(0);
-        timer.start();
-        pieceBtn.putClientProperty("highlighted", false);
-    }*/
+            });
+            checkTimer.setInitialDelay(0);
+            checkTimer.start();
+            pieceBtn.putClientProperty("highlighted", false);
+
+        }
+    }
 
     /**
      * Simple utility to set the background colour based on row and col.

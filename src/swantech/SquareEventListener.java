@@ -12,7 +12,9 @@ import java.util.ArrayList;
 
 /**
  * Event handler class for the chess board
- * @author Modified by Ifetayo
+ * @author Ifetayo
+ * @author Simon
+ * @author Moho
  */
 public class SquareEventListener implements ActionListener {
 
@@ -131,20 +133,35 @@ public class SquareEventListener implements ActionListener {
         //ChessMove to = GameBoard.getGameBoardInstance().getChessEngineInstance().engineMove();
         ChessMove to = AppGame.GameInstance().getChessEngineInstance().engineMove();
         Square kingSquare;
+        JButton kingBtn = null;
         boolean isBlackMove = AppGame.GameInstance().getChessEngineInstance().board.isBlackMove();
-        if(to.isCheck() || to.isCheckmate()){
+        /*kingSquare = AppGame.GameInstance().getChessEngineInstance().FindKing("WHITE");
+        JButton hn = buttonFromSquare(kingSquare);
+        hn.setBackground(Color.BLUE);
+        JOptionPane.showMessageDialog(GameBoard.getGameBoardInstance(), "Eggs are not supposed to be green.");*/
+
+
+        if(to.isCheck()){
             if(isBlackMove){
                 kingSquare = AppGame.GameInstance().getChessEngineInstance().FindKing("BLACK");
             }
             else{
                 kingSquare = AppGame.GameInstance().getChessEngineInstance().FindKing("WHITE");
             }
-            GameBoard.getGameBoardInstance().FlashSquare(kingSquare.getFile(), kingSquare.getRank());
-
+            kingBtn = buttonFromSquare(kingSquare);
+            //GameBoard.getGameBoardInstance().FlashKing(kingSquare.getFile(), kingSquare.getRank());
+            GameBoard.getGameBoardInstance().FlashKing(kingBtn, 1);
         }
+        if(!to.isCheck()){
+            GameBoard.getGameBoardInstance().FlashKing(kingBtn, 0);
+        }
+
         //updateStatus(to);
         drawBoardMove(to.getOrigin(), to.getDestination());
+        /*if(kingBtn != null)
+            GameBoard.getGameBoardInstance().FlashKing(kingBtn);*/
     }
+
 
     private JButton buttonFromSquare(Square s)
     {
