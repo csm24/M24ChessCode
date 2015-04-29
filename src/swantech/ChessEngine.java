@@ -1,5 +1,7 @@
 package swantech;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -9,6 +11,8 @@ import java.util.logging.*;
 import ictk.boardgame.*;
 import ictk.boardgame.chess.*;
 import ictk.boardgame.chess.io.FEN;
+import jdk.nashorn.internal.ir.ReturnNode;
+
 import static ictk.boardgame.chess.io.FEN.*;
 
 /**
@@ -76,12 +80,13 @@ public class ChessEngine {
             // keep for debugging - System.out.println("Working Directory = " + System.getProperty("user.dir"));
 
             String os = System.getProperty("os.name");
+            String path = getEnginePath();
 
             if (os.equals("Mac OS X")) {
-                stockfish = new Stockfish("./engine/stockfish");  // create new stockfish interface IOS
+                stockfish = new Stockfish(path + "stockfish");  // create new stockfish interface IOS
             } else {
-                // TODO Ifetayo - get the exact Windows text and test here - obviously I cannot!
-                stockfish = new Stockfish("./engine/stockfish-6-32.exe");  // create new stockfish interface WINDOWS
+                // Windows?
+                stockfish = new Stockfish(path + "stockfish-6-32.exe");  // create new stockfish interface WINDOWS
             }
 
             if (!stockfish.startEngine()) {
@@ -101,6 +106,20 @@ public class ChessEngine {
             e.printStackTrace();
             throw e;
         }
+    }
+
+    private String getEnginePath() {
+        // May be in ./src/engine/ or ./engine, try both
+        File f = new File("./src/engine/stockfish");
+        if(f.exists()){
+            return "./src/engine/";
+        } else {
+            f = new File("./engine/stockfish");
+            if (f.exists()) {
+                return("./engine/");
+            }
+        }
+        return null;
     }
 
     /**
