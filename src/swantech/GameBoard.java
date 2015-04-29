@@ -40,8 +40,8 @@ public class GameBoard extends JFrame {
     private JPanel chessBoard;
     private static final String[] COLS = new String[]{"a","b","c","d","e","f","g", "h"};
     private static final int SQUARESIZE = 64;
-//    private static final String imageDir= "./res/";  // TODO not sure here
-    private static final String imageDir= "/res/";  // TODO not sure here
+    private static final String imageDir= "/res/";  // Note /res directory needs to be in classpath!
+                                                    // (Works fine in JAR file)
     private static PlayColour myColour;
     private static int candidateRow = 0, candidateCol = 0;
     private static JLabel statusLabel;

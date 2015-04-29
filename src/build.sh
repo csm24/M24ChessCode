@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
 pwd
-javac -cp ../Library/ictk-0.2.0-nonet.jar:. ./swantech/*.java
-jar cfm swantech.jar manifest.mf ./swantech/*.class ../Library/ictk-0.2.0-nonet.jar ./res/*
+javac -Xlint:unchecked -cp .:../Library  ./swantech/*.java
+jar cfm swantech.jar manifest.mf ./swantech/*.class ../Library ./res/* ../engine/*
+rm swantech/*.class

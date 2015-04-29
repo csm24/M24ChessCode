@@ -1,5 +1,8 @@
 package swantech;
 
+import ictk.boardgame.GameInfo;
+import ictk.boardgame.chess.ChessGameInfo;
+
 import javax.swing.*;
 
 /**
@@ -52,9 +55,10 @@ public class AppGame {
      *
      */
     private void StartChessEngine(/*PlayColour engineColour*/){ //todo should be passing in the colour value
+
         try {
             myColour = PlayColour.WHITE;
-            chessEngine = new ChessEngine(chessEngine.otherColour(myColour));  // tell chess engine what colour it is playing
+            chessEngine = new swantech.ChessEngine(chessEngine.otherColour(myColour));  // tell chess engine what colour it is playing
         } catch (Exception e){
             System.err.println("Failed to initialse the chess engine, exiting");
             System.err.println("Error is : " + e.getMessage());
@@ -76,6 +80,8 @@ public class AppGame {
     }
 
     public static void main(String[] args){
+        ChessGameInfo gi = new ChessGameInfo(); // TODO take this out ASAP debug only
+
         appGame = new AppGame();
         appGame.ShowGameDisplay(); //show the display of the game
     }

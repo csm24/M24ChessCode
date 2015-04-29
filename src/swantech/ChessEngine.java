@@ -48,68 +48,6 @@ public class ChessEngine {
 
     private final static Logger LG = Logger.getLogger(ChessEngine.class.getName());
 
-
-    /**
-     *
-     * @param thisColour
-     * @return The other colour
-     * eg otherColour(PlayColour.BLACK) returns PlayColour.WHITE
-     */
-    public static PlayColour otherColour (PlayColour thisColour) {
-        if (thisColour == PlayColour.BLACK)
-            return PlayColour.WHITE;
-        else
-            return PlayColour.BLACK;
-    }
-
-    /**
-     * Finds the square for a piece, or null if not on board
-     * @return
-     */
-    public Square findPiece (String name, String colour)
-    {// TODO: this is rubbish
-        Square s=null;
-
-    for (int r = 1; r <= 8; r++)
-        for (int c = 1; c <= 8; c++) {
-             s = board.getSquare(r, c);
-            ChessPiece p = (ChessPiece) s.getPiece();
-            if ((p != null) && (p.isKing())){
-                return s;
-            }
-        }
-       return s;
-    }
-
-
-    /**
-     *
-     * @param colour String, colour of the king piece
-     * @return Square object
-     */
-    public Square FindKing(String colour){
-        Square square = null;
-        ChessPiece p;
-        for (int r = 1; r <= 8; r++){
-            for (int c = 1; c <= 8; c++) {
-                square = board.getSquare(r, c);
-                p = (ChessPiece) square.getPiece();
-
-                if(colour.equals("BLACK")){
-                    if (p != null && p.isKing() && p.isBlack()){
-                        return square;
-                    }
-                }
-                else{ //WHITE
-                    if (p != null && p.isKing() && !p.isBlack()){
-                        return square;
-                    }
-                }
-            }
-        }
-        return square;
-    }
-
     /**
      * Default constructor. Sets up a new board with standard starting position
      * Starts the Stockfish engine.
@@ -119,6 +57,7 @@ public class ChessEngine {
     public ChessEngine(PlayColour newEngineColour)  throws Exception
     {
         try {
+            System.out.println("ChessEngine constructor, colour : " + newEngineColour.toString());
             engineColour = newEngineColour;
             game = new ChessGame();
 
@@ -184,6 +123,69 @@ public class ChessEngine {
         return ChessEngineErrors.OK;
     }
 
+    /**
+     *
+     * @param thisColour
+     * @return The other colour
+     * eg otherColour(PlayColour.BLACK) returns PlayColour.WHITE
+     */
+    public static PlayColour otherColour (PlayColour thisColour) {
+        if (thisColour == PlayColour.BLACK)
+            return PlayColour.WHITE;
+        else
+            return PlayColour.BLACK;
+    }
+
+    /**
+     * Finds the square for a piece, or null if not on board
+     * @return
+     */
+    public Square findPiece (String name, String colour)
+    {// TODO: this is rubbish
+        Square s=null;
+
+    for (int r = 1; r <= 8; r++)
+        for (int c = 1; c <= 8; c++) {
+             s = board.getSquare(r, c);
+            ChessPiece p = (ChessPiece) s.getPiece();
+            if ((p != null) && (p.isKing())){
+                return s;
+            }
+        }
+       return s;
+    }
+
+
+    /**
+     *
+     * @param colour String, colour of the king piece
+     * @return Square object
+     */
+    public Square FindKing(String colour){
+        Square square = null;
+        ChessPiece p;
+        for (int r = 1; r <= 8; r++){
+            for (int c = 1; c <= 8; c++) {
+                square = board.getSquare(r, c);
+                p = (ChessPiece) square.getPiece();
+
+                if(colour.equals("BLACK")){
+                    if (p != null && p.isKing() && p.isBlack()){
+                        return square;
+                    }
+                }
+                else{ //WHITE
+                    if (p != null && p.isKing() && !p.isBlack()){
+                        return square;
+                    }
+                }
+            }
+        }
+        return square;
+    }
+
+
+
     private static String colourFromBool(boolean isBlack)
     {
         return isBlack?"Black":"White";
@@ -223,6 +225,7 @@ public class ChessEngine {
 //                                    "Game turn is : " + colourFromBool(board.isBlackMove()));
 //            return null;
 //        }
+        @SuppressWarnings("unchecked")
         ArrayList<Square> legalMoves = (ArrayList<Square>) thisPiece.getLegalDests();
 
         return legalMoves;
