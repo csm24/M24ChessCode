@@ -217,16 +217,17 @@ public class ChessEngine {
         if (!moveColour.equals(pieceColour))
             return null;
 
-        if (board.isBlackMove() != thisPiece.isBlack())
-        {
-            System.err.println("Internal error , piece is : " + colourFromBool(thisPiece.isBlack()) +
-                                    "Game turn is : " + colourFromBool(board.isBlackMove()));
-            return null;
-        }
+        // The code below is duplicate of the line above ?? Delete if it is still OK.
+//        if (board.isBlackMove() != thisPiece.isBlack())
+//        {
+//            System.err.println("Internal error , piece is : " + colourFromBool(thisPiece.isBlack()) +
+//                                    "Game turn is : " + colourFromBool(board.isBlackMove()));
+//            return null;
+//        }
         ArrayList<Square> legalMoves = (ArrayList<Square>) thisPiece.getLegalDests();
 
         return legalMoves;
-    }
+    } // getLegalMoves
 
 
     /**
@@ -276,7 +277,9 @@ public class ChessEngine {
      */
     private Move makeAMove(Square startSquare, Square endSquare) throws Exception {
         try {
-            Move m = new ChessMove((ictk.boardgame.chess.ChessBoard) board, startSquare.getFile(), startSquare.getRank(), endSquare.getFile(), endSquare.getRank());
+            // Calls the ICTK Library method.
+            Move m = new ChessMove((ictk.boardgame.chess.ChessBoard) board, startSquare.getFile(),
+                                    startSquare.getRank(), endSquare.getFile(), endSquare.getRank());
             if (m.isLegal()) {
                 history.add(m);  // This executes the move, and records it in history
 
@@ -333,7 +336,7 @@ public class ChessEngine {
                 return ChessEngineErrors.WRONG_COLOUR;
             }
 
-            Move currentMove = makeAMove(startSquare, endSquare); // The ICTK method that does the work
+            Move currentMove = makeAMove(startSquare, endSquare); // The  method that does the work
 
         } catch (Exception e) {
             LG.log(Level.SEVERE, "ChessEngine makeMyMove FAILED");

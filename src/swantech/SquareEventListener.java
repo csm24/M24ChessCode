@@ -59,7 +59,6 @@ public class SquareEventListener implements ActionListener {
         GameBoard.getGameBoardInstance().unhighlightAll();
 
         // What are the legal moves?
-        //ArrayList<Square> squares = GameBoard.getGameBoardInstance().getChessEngineInstance().getLegalMoves(intSquare(row, col));
         ArrayList<Square> squares = AppGame.GameInstance().getChessEngineInstance().getLegalMoves(intSquare(row, col));
         if (squares == null || squares.size() == 0) {
             GameBoard.getGameBoardInstance().FlashSquare(row, col);
@@ -68,7 +67,8 @@ public class SquareEventListener implements ActionListener {
             candidateCol = col;
             candidateRow = row;
             for (int i = 0; i < squares.size(); i++) {
-                GameBoard.getGameBoardInstance().highlight(squareToRow(squares.get(i)), squareToCol(squares.get(i)), true);
+                GameBoard.getGameBoardInstance().highlight(squareToRow(squares.get(i)),
+                        squareToCol(squares.get(i)), true);
             }
         }
     }
@@ -205,6 +205,7 @@ public class SquareEventListener implements ActionListener {
 
     /**
      * Draws the move onto the board
+     * Simple UNLESS its castling!
      * @param fromSquare Square
      * @param toSquare Square
      */
@@ -215,6 +216,33 @@ public class SquareEventListener implements ActionListener {
         RemovePiece(squareToRow(fromSquare), squareToCol(fromSquare));
         GameBoard.getGameBoardInstance().setPiece(squareToRow(toSquare), squareToCol(toSquare), piece);
         GameBoard.getGameBoardInstance().unhighlightAll();
+        // did we just castle?
+        didCastle(fromSquare, toSquare, piece);
+    }
+
+    private void didCastle(Square fromSquare, Square toSquare, String piece) {
+        // Tricky one, this
+        // IF the piece is a king AND it moved > 1 square THEN it must have casteled SO move the rook as well
+        Square knightFrom, knightTo;
+        byte rank = 0;
+
+        if (Math.abs(fromSquare.getFile() - toSquare.getFile())  > 1) { // moving > 1 square along rank
+            if (piece.equals("wk")) {rank = 1;}
+            else if (piece.equals("bk")) {rank = 8;}
+            if (rank > 0) { //ELSE is not a king (eg rook or queen moving along back row)
+                //  king is castling
+                if ((fromSquare.getFile() - toSquare.getFile()) > 0) {
+                    // Castling 'left'
+                     knightFrom = new Square((byte) 1, rank);
+                     knightTo = new Square((byte) 4, rank);
+                } else {
+                    // Castling 'Right'
+                     knightFrom = new Square((byte) 8, rank);
+                     knightTo = new Square((byte) 6, rank);
+                }
+                drawBoardMove(knightFrom, knightTo); // Recurse, but only once, as its not a King
+                }
+            }
     }
 
     /**
