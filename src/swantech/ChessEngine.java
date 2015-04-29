@@ -80,7 +80,7 @@ public class ChessEngine {
             // keep for debugging - System.out.println("Working Directory = " + System.getProperty("user.dir"));
 
             String os = System.getProperty("os.name");
-            String path = getEnginePath();
+            String path = getEnginePath();  // Find the right directory for the engine
 
             if (os.equals("Mac OS X")) {
                 stockfish = new Stockfish(path + "stockfish");  // create new stockfish interface IOS
@@ -108,6 +108,11 @@ public class ChessEngine {
         }
     }
 
+    /**
+     * Nasty kludge as I could not get working from same directory in intellij and command line,
+     * this looks for stockfish in two places (works for Windows version as well)
+     * @return directory path (relative)
+     */
     private String getEnginePath() {
         // May be in ./src/engine/ or ./engine, try both
         File f = new File("./src/engine/stockfish");

@@ -102,12 +102,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aa9586accdd914705d51e7f2097f57355"><td class="memItemLeft" align="right" valign="top">Square&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classswantech_1_1_chess_engine.html#aa9586accdd914705d51e7f2097f57355">findPiece</a> (String name, String colour)</td></tr>
-<tr class="separator:aa9586accdd914705d51e7f2097f57355"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a206b7f60195b050af7bf73124a359bd5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classswantech_1_1_chess_engine.html#a206b7f60195b050af7bf73124a359bd5">ChessEngine</a> (<a class="el" href="enumswantech_1_1_play_colour.html">PlayColour</a> newEngineColour)  throws Exception     </td></tr>
 <tr class="separator:a206b7f60195b050af7bf73124a359bd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa5030a1e441c0868999509e35652636c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="enumswantech_1_1_chess_engine_errors.html">ChessEngineErrors</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classswantech_1_1_chess_engine.html#aa5030a1e441c0868999509e35652636c">setChessplayer</a> (<a class="el" href="enumswantech_1_1_play_colour.html">PlayColour</a> c, String firstName, String lastName)</td></tr>
 <tr class="separator:aa5030a1e441c0868999509e35652636c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9586accdd914705d51e7f2097f57355"><td class="memItemLeft" align="right" valign="top">Square&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classswantech_1_1_chess_engine.html#aa9586accdd914705d51e7f2097f57355">findPiece</a> (String name, String colour)</td></tr>
+<tr class="separator:aa9586accdd914705d51e7f2097f57355"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a014e771d961f0dccada1b009242b8289"><td class="memItemLeft" align="right" valign="top">Square&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classswantech_1_1_chess_engine.html#a014e771d961f0dccada1b009242b8289">FindKing</a> (String colour)</td></tr>
+<tr class="separator:a014e771d961f0dccada1b009242b8289"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a529858ea407075c6a4daf04d5b3dd51e"><td class="memItemLeft" align="right" valign="top">ArrayList&lt; Square &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classswantech_1_1_chess_engine.html#a529858ea407075c6a4daf04d5b3dd51e">getLegalMoves</a> (Square startSquare)</td></tr>
 <tr class="separator:a529858ea407075c6a4daf04d5b3dd51e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad09f3dd52a728a42cdb1515e7104f03e"><td class="memItemLeft" align="right" valign="top">ChessPiece&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classswantech_1_1_chess_engine.html#ad09f3dd52a728a42cdb1515e7104f03e">getPieceAt</a> (Square sq)</td></tr>
@@ -175,6 +177,29 @@ Static Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>THE BIG ONE, ask the engine to make a move!</p>
 <dl class="section return"><dt>Returns</dt><dd>the ChessMove made, i.e. the engine-controlled piece with before and after . NOTE that methods on ChessMove provide all the necessary ionformation for continuing play, such as isCheck, isCheckMate() </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a014e771d961f0dccada1b009242b8289"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Square swantech.ChessEngine.FindKing </td>
+          <td>(</td>
+          <td class="paramtype">String&#160;</td>
+          <td class="paramname"><em>colour</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">colour</td><td>String, colour of the king piece </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Square object </dd></dl>
 
 </div>
 </div>
@@ -451,7 +476,7 @@ Static Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Apr 27 2015 11:42:47 for M24 Chess EngineProject by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Apr 29 2015 16:28:14 for M24 Chess EngineProject by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.9.1
 </small></address>

@@ -14,11 +14,13 @@ Makes extensive use of I\+C\+T\+K library, released under the G\+N\+U G\+P\+L li
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-Square \hyperlink{classswantech_1_1_chess_engine_aa9586accdd914705d51e7f2097f57355}{find\+Piece} (String name, String colour)
-\item 
 \hyperlink{classswantech_1_1_chess_engine_a206b7f60195b050af7bf73124a359bd5}{Chess\+Engine} (\hyperlink{enumswantech_1_1_play_colour}{Play\+Colour} new\+Engine\+Colour)  throws Exception     
 \item 
 \hyperlink{enumswantech_1_1_chess_engine_errors}{Chess\+Engine\+Errors} \hyperlink{classswantech_1_1_chess_engine_aa5030a1e441c0868999509e35652636c}{set\+Chessplayer} (\hyperlink{enumswantech_1_1_play_colour}{Play\+Colour} c, String first\+Name, String last\+Name)
+\item 
+Square \hyperlink{classswantech_1_1_chess_engine_aa9586accdd914705d51e7f2097f57355}{find\+Piece} (String name, String colour)
+\item 
+Square \hyperlink{classswantech_1_1_chess_engine_a014e771d961f0dccada1b009242b8289}{Find\+King} (String colour)
 \item 
 Array\+List$<$ Square $>$ \hyperlink{classswantech_1_1_chess_engine_a529858ea407075c6a4daf04d5b3dd51e}{get\+Legal\+Moves} (Square start\+Square)
 \item 
@@ -83,6 +85,21 @@ T\+H\+E B\+I\+G O\+N\+E, ask the engine to make a move!
 
 \begin{DoxyReturn}{Returns}
 the Chess\+Move made, i.\+e. the engine-\/controlled piece with before and after . N\+O\+T\+E that methods on Chess\+Move provide all the necessary ionformation for continuing play, such as is\+Check, is\+Check\+Mate() 
+\end{DoxyReturn}
+\hypertarget{classswantech_1_1_chess_engine_a014e771d961f0dccada1b009242b8289}{}\index{swantech\+::\+Chess\+Engine@{swantech\+::\+Chess\+Engine}!Find\+King@{Find\+King}}
+\index{Find\+King@{Find\+King}!swantech\+::\+Chess\+Engine@{swantech\+::\+Chess\+Engine}}
+\subsubsection[{Find\+King}]{\setlength{\rightskip}{0pt plus 5cm}Square swantech.\+Chess\+Engine.\+Find\+King (
+\begin{DoxyParamCaption}
+\item[{String}]{colour}
+\end{DoxyParamCaption}
+)}\label{classswantech_1_1_chess_engine_a014e771d961f0dccada1b009242b8289}
+
+\begin{DoxyParams}{Parameters}
+{\em colour} & String, colour of the king piece \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Square object 
 \end{DoxyReturn}
 \hypertarget{classswantech_1_1_chess_engine_aa9586accdd914705d51e7f2097f57355}{}\index{swantech\+::\+Chess\+Engine@{swantech\+::\+Chess\+Engine}!find\+Piece@{find\+Piece}}
 \index{find\+Piece@{find\+Piece}!swantech\+::\+Chess\+Engine@{swantech\+::\+Chess\+Engine}}
