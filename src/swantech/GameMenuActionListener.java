@@ -19,7 +19,7 @@ public class GameMenuActionListener implements ActionListener {
             GameBoard.getGameBoardInstance().GameOptionsDialog();//start game
         } else if (cmd.equals("Exit")){
             System.out.println("EXIT");
-            // todo: add exit code
+            System.exit(0);
         } else {
             System.err.println("GamemenuActionListener:actionPerformed Unknown option");
         }
