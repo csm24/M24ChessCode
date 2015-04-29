@@ -78,15 +78,38 @@ public class ChessEngine {
             if ((p != null) && (p.isKing())){
                 return s;
             }
-
         }
        return s;
     }
 
 
+    /**
+     *
+     * @param colour String, colour of the king piece
+     * @return Square object
+     */
+    public Square FindKing(String colour){
+        Square square = null;
+        ChessPiece p;
+        for (int r = 1; r <= 8; r++){
+            for (int c = 1; c <= 8; c++) {
+                square = board.getSquare(r, c);
+                p = (ChessPiece) square.getPiece();
 
-
-
+                if(colour.equals("BLACK")){
+                    if (p != null && p.isKing() && p.isBlack()){
+                        return square;
+                    }
+                }
+                else{ //WHITE
+                    if (p != null && p.isKing() && !p.isBlack()){
+                        return square;
+                    }
+                }
+            }
+        }
+        return square;
+    }
 
     /**
      * Default constructor. Sets up a new board with standard starting position
