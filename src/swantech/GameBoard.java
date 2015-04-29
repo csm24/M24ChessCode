@@ -4,7 +4,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -36,7 +40,8 @@ public class GameBoard extends JFrame {
     private JPanel chessBoard;
     private static final String[] COLS = new String[]{"a","b","c","d","e","f","g", "h"};
     private static final int SQUARESIZE = 64;
-    private static final String imageDir= "../res/";
+//    private static final String imageDir= "./res/";  // TODO not sure here
+    private static final String imageDir= "/res/";  // TODO not sure here
     private static PlayColour myColour;
     private static int candidateRow = 0, candidateCol = 0;
     private static JLabel statusLabel;
@@ -287,9 +292,13 @@ public class GameBoard extends JFrame {
 
         String fileName = imageDir + pieceName + ".png";
         try {
+            //todo: working here
             piece = ImageIO.read(this.getClass().getResource(fileName));
-        } catch (IOException ex) {
-            //Logger.getLogger(ChessBoard.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            String currentDir = System.getProperty("user.dir");
+            System.out.println("GameBoard:setPiece FATAL ERROR IOException cannot find chess piece graphic");
+            System.out.println("File name is : " + fileName);
+            System.out.println("Current dir is "+currentDir);
         }
 
         icon = new ImageIcon(piece);

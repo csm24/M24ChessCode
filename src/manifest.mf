@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Created-By: Bundle
+Class-Path: ../Library/ictk-0.2.0-nonet.jar
+Main-Class: swantech/AppGame
+

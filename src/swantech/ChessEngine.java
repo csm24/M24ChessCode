@@ -9,7 +9,6 @@ import java.util.logging.*;
 import ictk.boardgame.*;
 import ictk.boardgame.chess.*;
 import ictk.boardgame.chess.io.FEN;
-import sun.swing.text.html.FrameEditorPaneTag;
 import static ictk.boardgame.chess.io.FEN.*;
 
 /**
