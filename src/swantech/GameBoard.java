@@ -15,16 +15,16 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 /**
- *
+ * @Simon
  * @author Moho
  * @author Ifetayo
  */
 public class GameBoard extends JFrame {
 
     //private static GameBoard gameBoard;
-    JPanel leftPanel;
-    JPanel centerPanel;
-    JPanel rightPanel;
+    private JPanel leftPanel;
+    private JPanel centerPanel;
+    private JPanel rightPanel;
 
     private MyProfilePanel myProfilePanel;
     private BestUserPanel bestUserPanel;
@@ -64,7 +64,7 @@ public class GameBoard extends JFrame {
     }
 
     /**
-     * Game board instance TODO check for null
+     * Game board instance
      * @return
      */
     public static GameBoard getGameBoardInstance(){
@@ -75,18 +75,32 @@ public class GameBoard extends JFrame {
         return chessBoardSquares[row][col];
     }
 
+    /**
+     * Set the text area with the game move for black player
+     * @param text String from chess engine
+     */
     public void SetBlackHistory(String text){
-        // TODO SImon add call to here
         blkMoveHistory.append(text + "\n");
     }
+
+    /**
+     * Set the text area with the game move for white player
+     * @param text String from chess engine
+     */
     public void SetWhiteHistory(String text){
         whtMoveHistory.append(text + "\n");
     }
 
+    /**
+     * Display the chess board
+     */
     private void ShowBoard(){
         centerPanel.setVisible(true);
     }
 
+    /**
+     * This method shows the game options with which you can choose from
+     */
     public void GameOptionsDialog(){
         JPanel panel = new JPanel(new GridLayout(5,1));
         JLabel label = new JLabel("Select Game Option");
@@ -113,7 +127,6 @@ public class GameBoard extends JFrame {
                 null, options, options[0]);
 
         if(option == 0){ //the user has selected an option, now show the chess board so play can start
-            System.out.print(gameOptionBtnGroup.getSelection().getActionCommand());
             ShowBoard();
         }
         else{
@@ -122,6 +135,9 @@ public class GameBoard extends JFrame {
 
     }
 
+    /**
+     * This method sets up the JFrame with its components
+     */
     private void init(){
         Container contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
@@ -405,7 +421,6 @@ public class GameBoard extends JFrame {
      */
     public void showBoardStatus(String status)
     {
-        // todo: MOH update here
         statusLabel.setText(status);
     }
 
@@ -508,6 +523,9 @@ public class GameBoard extends JFrame {
         candidateRow = candidateCol = 0;
     }
 
+    /**
+     * This method set the board theme makes it look nicer
+     */
     public void SetTheme() {
 
         /* Set the Nimbus look and feel */
