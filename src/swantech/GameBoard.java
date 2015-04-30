@@ -150,16 +150,11 @@ public class GameBoard extends JFrame {
         JMenu helpMenu = new JMenu("Help");
         JMenuItem sourceItem = new JMenuItem("Source code");
         JMenuItem howToPlayItem = new JMenuItem("How To Play");
-        //JMenuItem helpContentsItem = new JMenuItem("Help Contents");
         JMenuItem aboutItem = new JMenuItem("About");
 
-
-        //helpMenu.addSeparator();
         helpMenu.add(aboutItem);
         helpMenu.addSeparator();
         helpMenu.add(howToPlayItem);
-        //helpMenu.add(helpContentsItem);
-
         helpMenu.add(sourceItem);
 
         aboutItem.addActionListener(new ActionListener() {
@@ -173,8 +168,6 @@ public class GameBoard extends JFrame {
                         "Swansea University";
 
                 JOptionPane.showMessageDialog(GameBoard.this, aboutText, "About", JOptionPane.INFORMATION_MESSAGE);
-
-
             }
         });
 
@@ -185,6 +178,7 @@ public class GameBoard extends JFrame {
                 try {
                     myURL = new URL("http://www.chess.com/learn-how-to-play-chess");
                 } catch (MalformedURLException e) {
+                    //System.out.println(e.getMessage());
                     //e.printStackTrace();
                 }
                 openWebpage(myURL);
@@ -237,7 +231,6 @@ public class GameBoard extends JFrame {
 
 
         startGameItem.addActionListener(gameMenuActionListener);
-        //endGameItem.addActionListener(gameMenuActionListener);
 
         leftPanel = new JPanel(new GridLayout(2,1));
         centerPanel = new JPanel(new BorderLayout());

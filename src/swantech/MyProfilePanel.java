@@ -38,7 +38,6 @@ public class MyProfilePanel extends JPanel {
 		
 		Dimension dim = getPreferredSize();
 		dim.width = 200;
-		//dim.height = 223;
 		setPreferredSize(dim);
 		
 		

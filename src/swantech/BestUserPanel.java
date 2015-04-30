@@ -90,9 +90,7 @@ public class BestUserPanel extends JPanel {
 		gbc.anchor = GridBagConstraints.LAST_LINE_END;		
 		gbc.insets = new Insets(0,10,0,0); 
 		add(drawValueLable, gbc);
-		
-		
-		
+
 		Border innerBorder = BorderFactory.createTitledBorder("User ranking");
 		Border outterBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
 		setBorder(BorderFactory.createCompoundBorder(outterBorder, innerBorder)	);
