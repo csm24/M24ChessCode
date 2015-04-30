@@ -5,10 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -142,12 +139,12 @@ public class GameBoard extends JFrame {
 
 
         //helpMenu.addSeparator();
+        helpMenu.add(aboutItem);
+        helpMenu.addSeparator();
         helpMenu.add(howToPlayItem);
         //helpMenu.add(helpContentsItem);
-        helpMenu.addSeparator();
-        helpMenu.add(aboutItem);
-        helpMenu.add(sourceItem);
 
+        helpMenu.add(sourceItem);
 
         aboutItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
@@ -155,7 +152,7 @@ public class GameBoard extends JFrame {
 
                 String aboutText = "SwanTech Chess\n" +
                         "Version 1.0\n" +
-                        "CS-M40 coursework\n" +
+                        "CS-M24 coursework\n" +
                         "Computer Science department\n" +
                         "Swansea University";
 
@@ -194,6 +191,15 @@ public class GameBoard extends JFrame {
             }
         });
 
+        endGameItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
+
+                int action = JOptionPane.showConfirmDialog(GameBoard.this, "Do you want to leave the game?", "Confirm Exit", JOptionPane.OK_CANCEL_OPTION);
+                if (action == JOptionPane.OK_OPTION) {
+                    System.exit(0);
+                }
+            }
+        });
 
         gameMenuActionListener = new GameMenuActionListener();
         squareEventListener = new SquareEventListener();
@@ -204,30 +210,20 @@ public class GameBoard extends JFrame {
         gameBar.add(helpMenu);
 
 
+
         gameMenu.setMnemonic(KeyEvent.VK_G);
         helpMenu.setMnemonic(KeyEvent.VK_H);
 
         startGameItem.setMnemonic(KeyEvent.VK_N);
         startGameItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
-
         endGameItem.setMnemonic(KeyEvent.VK_X);
-        endGameItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.CTRL_MASK));
-
-
-        endGameItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ev) {
-                int action = JOptionPane.showConfirmDialog(GameBoard.this, "Do you want to leave the game?", "Confirm Exit", JOptionPane.OK_CANCEL_OPTION);
-                if (action == JOptionPane.OK_OPTION) {
-                    System.exit(0);
-                }
-            }
-        });
+        endGameItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W, ActionEvent.CTRL_MASK));
 
 
         startGameItem.addActionListener(gameMenuActionListener);
-        endGameItem.addActionListener(gameMenuActionListener);
+        //endGameItem.addActionListener(gameMenuActionListener);
 
-        leftPanel = new JPanel();
+        leftPanel = new JPanel(new GridLayout(2,1));
         centerPanel = new JPanel(new BorderLayout());
         rightPanel = new JPanel(new GridLayout(2,1));
 
@@ -236,8 +232,6 @@ public class GameBoard extends JFrame {
         BuildLeftPanelDisplay();
         BuildCenterPanelDisplay();
         BuildRightPanelDisplay();
-
-        //TODO find out from Moho what should be displayed on the left panel
 
         contentPane.add(leftPanel, BorderLayout.WEST);
         contentPane.add(centerPanel, BorderLayout.CENTER);
@@ -249,7 +243,6 @@ public class GameBoard extends JFrame {
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
-
     }
 
     /**
@@ -259,8 +252,8 @@ public class GameBoard extends JFrame {
 
         myProfilePanel = new MyProfilePanel();
         bestUserPanel = new BestUserPanel();
-        //leftPanel.add(myProfilePanel);
-        //leftPanel.add(bestUserPanel);
+        leftPanel.add(myProfilePanel); // this panel is not working at the moment - just to show
+        leftPanel.add(bestUserPanel); // this panel is not working at the moment - just to show
 
     }
 
@@ -542,6 +535,10 @@ public class GameBoard extends JFrame {
     }
 
 
+    /**
+     *This method open a url in user's browser
+     * @param uri webpage complete URL
+     */
     public static void openWebpage(URI uri) {
         Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
         if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
@@ -553,6 +550,10 @@ public class GameBoard extends JFrame {
         }
     }
 
+    /**
+     *This method open a url in user's browser
+     * @param url webpage complete URL
+     */
     public static void openWebpage(URL url) {
         try {
             openWebpage(url.toURI());
