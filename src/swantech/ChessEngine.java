@@ -12,7 +12,7 @@ import java.util.logging.*;
 import ictk.boardgame.*;
 import ictk.boardgame.chess.*;
 import ictk.boardgame.chess.io.FEN;
-import jdk.nashorn.internal.ir.ReturnNode;
+//import jdk.nashorn.internal.ir.ReturnNode;
 
 import static ictk.boardgame.chess.io.FEN.*;
 
@@ -44,8 +44,7 @@ public class ChessEngine {
     History history = null;
     Move move = null,
             e4 = null;
-    //    MoveNotation  san     = new SAN();
-//    PGNWriter     writer  = null;
+
     ChessGameInfo gi = null;
     ChessPlayer player = null;
     PlayColour engineColour;
@@ -62,7 +61,6 @@ public class ChessEngine {
     public ChessEngine(PlayColour newEngineColour)  throws Exception
     {
         try {
-            System.out.println("ChessEngine constructor, colour : " + newEngineColour.toString());
             engineColour = newEngineColour;
             game = new ChessGame();
 
@@ -86,19 +84,18 @@ public class ChessEngine {
 
             if (os.equals("Mac OS X")) {
                 URL engineURL = this.getClass().getResource("/engine/stockfish-6-64");
-                if (engineURL != null)
-                    System.out.println("URL : " + engineURL.toString());
-                else
-                    System.out.println("URL is null");
+
 
                 path = engineURL.getFile();
-                System.out.println("XXXX path is : " + path);
                 if (path != null)
                     stockfish = new Stockfish(path);  // create new stockfish interface IOS
 //                stockfish = new Stockfish(path + "stockfish-6-64");  // create new stockfish interface IOS
-            } else {
+            } else if(os.contains("Win")) {
                 // Windows?
                 stockfish = new Stockfish(path + "stockfish-6-32.exe");  // create new stockfish interface WINDOWS
+            }
+            else{
+                stockfish = new Stockfish(path +"stockfish_6_x64");  // create new stockfish interface Linux
             }
 
             if (!stockfish.startEngine()) {
@@ -189,7 +186,7 @@ public class ChessEngine {
      * @return
      */
     public Square findPiece (String name, String colour)
-    {// TODO: this is rubbish
+    {
         Square s=null;
 
     for (int r = 1; r <= 8; r++)
@@ -266,13 +263,7 @@ public class ChessEngine {
         if (!moveColour.equals(pieceColour))
             return null;
 
-        // The code below is duplicate of the line above ?? Delete if it is still OK.
-//        if (board.isBlackMove() != thisPiece.isBlack())
-//        {
-//            System.err.println("Internal error , piece is : " + colourFromBool(thisPiece.isBlack()) +
-//                                    "Game turn is : " + colourFromBool(board.isBlackMove()));
-//            return null;
-//        }
+
         @SuppressWarnings("unchecked")
         ArrayList<Square> legalMoves = (ArrayList<Square>) thisPiece.getLegalDests();
 
@@ -397,6 +388,11 @@ public class ChessEngine {
         return ChessEngineErrors.OK;
     }
 
+    /**
+     * Appends game history to the history display as the game progresses.
+     * @param play colour
+     * @param currentMove in short text form such as "ka2-a4"
+     */
     void setGameHistory(PlayColour c, Move currentMove) {
         AppGame appGame = AppGame.GameInstance();
         GameBoard gameBoard = appGame.GetGameBoardInstance();
@@ -495,8 +491,8 @@ public class ChessEngine {
             }
 
             // The big one, calculate a move
-            // TODO: unreliable?
-            responses = askStockfish("go", 2500);  // TODO reduce 2000 ??
+            // Needs quite a long time to process a move
+            responses = askStockfish("go", 2000);  // TODO tune this for fastest reliable operation
             // Should get several lines, last one is important and says eg:
             // bestmove g1f3 ponder d7d5 -
             // check words(0) == bestmove, and if ok, use words(1) for the move

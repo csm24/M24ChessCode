@@ -74,10 +74,10 @@ public class SquareEventListener implements ActionListener {
     }
 
     /**
-     * TODO Doxygen description
+     * Generates an ictk library square using our internal row and column numbering
      * @param f int, integer file of the square on the chess board
      * @param r int, integer rank of the square on the chess board
-     * @return
+     * @return Square (just rank and file, no piece data)
      */
     private Square intSquare(int f, int r)
     {
@@ -135,11 +135,10 @@ public class SquareEventListener implements ActionListener {
         Square kingSquare;
         JButton kingBtn = null;
         boolean isBlackMove = AppGame.GameInstance().getChessEngineInstance().board.isBlackMove();
-        /*kingSquare = AppGame.GameInstance().getChessEngineInstance().FindKing("WHITE");
-        JButton hn = buttonFromSquare(kingSquare);
-        hn.setBackground(Color.BLUE);
-        JOptionPane.showMessageDialog(GameBoard.getGameBoardInstance(), "Eggs are not supposed to be green.");*/
 
+        if(to.isCheckmate()){
+            JOptionPane.showMessageDialog(GameBoard.getGameBoardInstance(), "Checkmate. Game Over!");
+        }
 
         if(to.isCheck()){
             if(isBlackMove){

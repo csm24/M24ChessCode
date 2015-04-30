@@ -15,9 +15,9 @@ import javax.swing.*;
 public class AppGame {
 
     private static GameBoard gameBoard;
-    //int gameStatus; //todo should be an enum
-    Profile blackPlayer;
-    Profile whitePlayer;
+    //int gameStatus;
+    private Profile blackPlayer;
+    private Profile whitePlayer;
     private static ChessEngine chessEngine;
     private static PlayColour myColour;
     private static AppGame appGame;
@@ -45,7 +45,7 @@ public class AppGame {
     public ChessEngine getChessEngineInstance(){
 
         if (chessEngine == null){
-            StartChessEngine();//todo let the user know what has happened
+            StartChessEngine();
         }
         return chessEngine;
     }
@@ -54,7 +54,7 @@ public class AppGame {
      * Start the Chess engine
      *
      */
-    private void StartChessEngine(/*PlayColour engineColour*/){ //todo should be passing in the colour value
+    private void StartChessEngine(/*PlayColour engineColour*/){
 
         try {
             myColour = PlayColour.WHITE;
@@ -79,9 +79,11 @@ public class AppGame {
         });
     }
 
+    /**
+     * Main method
+     * @param args
+     */
     public static void main(String[] args){
-        ChessGameInfo gi = new ChessGameInfo(); // TODO take this out ASAP debug only
-
         appGame = new AppGame();
         appGame.ShowGameDisplay(); //show the display of the game
     }
