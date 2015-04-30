@@ -9,7 +9,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
-
+/**
+ *
+ * @author Moho
+ */
 public class MyProfilePanel extends JPanel {
 	
 	private JLabel nameLable;
