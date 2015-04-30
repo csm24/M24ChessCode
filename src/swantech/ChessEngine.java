@@ -44,8 +44,7 @@ public class ChessEngine {
     History history = null;
     Move move = null,
             e4 = null;
-    //    MoveNotation  san     = new SAN();
-//    PGNWriter     writer  = null;
+
     ChessGameInfo gi = null;
     ChessPlayer player = null;
     PlayColour engineColour;
@@ -389,6 +388,11 @@ public class ChessEngine {
         return ChessEngineErrors.OK;
     }
 
+    /**
+     * Appends game history to the history display as the game progresses.
+     * @param play colour
+     * @param currentMove in short text form such as "ka2-a4"
+     */
     void setGameHistory(PlayColour c, Move currentMove) {
         AppGame appGame = AppGame.GameInstance();
         GameBoard gameBoard = appGame.GetGameBoardInstance();
