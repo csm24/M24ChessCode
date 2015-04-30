@@ -62,7 +62,6 @@ public class ChessEngine {
     public ChessEngine(PlayColour newEngineColour)  throws Exception
     {
         try {
-            System.out.println("ChessEngine constructor, colour : " + newEngineColour.toString());
             engineColour = newEngineColour;
             game = new ChessGame();
 
@@ -86,13 +85,9 @@ public class ChessEngine {
 
             if (os.equals("Mac OS X")) {
                 URL engineURL = this.getClass().getResource("/engine/stockfish-6-64");
-                if (engineURL != null)
-                    System.out.println("URL : " + engineURL.toString());
-                else
-                    System.out.println("URL is null");
+
 
                 path = engineURL.getFile();
-                System.out.println("XXXX path is : " + path);
                 if (path != null)
                     stockfish = new Stockfish(path);  // create new stockfish interface IOS
 //                stockfish = new Stockfish(path + "stockfish-6-64");  // create new stockfish interface IOS
@@ -269,13 +264,7 @@ public class ChessEngine {
         if (!moveColour.equals(pieceColour))
             return null;
 
-        // The code below is duplicate of the line above ?? Delete if it is still OK.
-//        if (board.isBlackMove() != thisPiece.isBlack())
-//        {
-//            System.err.println("Internal error , piece is : " + colourFromBool(thisPiece.isBlack()) +
-//                                    "Game turn is : " + colourFromBool(board.isBlackMove()));
-//            return null;
-//        }
+
         @SuppressWarnings("unchecked")
         ArrayList<Square> legalMoves = (ArrayList<Square>) thisPiece.getLegalDests();
 
