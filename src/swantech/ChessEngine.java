@@ -96,7 +96,7 @@ public class ChessEngine {
                 if (path != null)
                     stockfish = new Stockfish(path);  // create new stockfish interface IOS
 //                stockfish = new Stockfish(path + "stockfish-6-64");  // create new stockfish interface IOS
-            } else if(os.contains("win")) {
+            } else if(os.contains("Win")) {
                 // Windows?
                 stockfish = new Stockfish(path + "stockfish-6-32.exe");  // create new stockfish interface WINDOWS
             }
