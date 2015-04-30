@@ -2,6 +2,7 @@ package swantech;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -80,10 +81,21 @@ public class ChessEngine {
             // keep for debugging - System.out.println("Working Directory = " + System.getProperty("user.dir"));
 
             String os = System.getProperty("os.name");
-            String path = getEnginePath();  // Find the right directory for the engine
+            String path = getEnginePath(os);  // Find the right directory for the engine
+            if (path.isEmpty()) path = "";
 
             if (os.equals("Mac OS X")) {
-                stockfish = new Stockfish(path + "stockfish");  // create new stockfish interface IOS
+                URL engineURL = this.getClass().getResource("/engine/stockfish-6-64");
+                if (engineURL != null)
+                    System.out.println("URL : " + engineURL.toString());
+                else
+                    System.out.println("URL is null");
+
+                path = engineURL.getFile();
+                System.out.println("XXXX path is : " + path);
+                if (path != null)
+                    stockfish = new Stockfish(path);  // create new stockfish interface IOS
+//                stockfish = new Stockfish(path + "stockfish-6-64");  // create new stockfish interface IOS
             } else {
                 // Windows?
                 stockfish = new Stockfish(path + "stockfish-6-32.exe");  // create new stockfish interface WINDOWS
@@ -113,18 +125,30 @@ public class ChessEngine {
      * this looks for stockfish in two places (works for Windows version as well)
      * @return directory path (relative)
      */
-    private String getEnginePath() {
+    private String getEnginePath(String os) {
         // May be in ./src/engine/ or ./engine, try both
-        File f = new File("./src/engine/stockfish");
-        if(f.exists()){
+        String fn;
+        if (os.equals("Mac OS X")) {
+            fn = "stockfish-6-64";
+        } else {
+            fn = "stockfish-6-32.exe";
+        }
+
+        File f = new File("./src/engine/" + fn);
+        if (f.exists()) {
             return "./src/engine/";
         } else {
-            f = new File("./engine/stockfish");
+            f = new File("./engine/" + fn);
             if (f.exists()) {
-                return("./engine/");
+                return ("./engine/");
+            } else {
+                f = new File(fn);
+                if (f.exists()) {
+                    return ("");
+                }
             }
+            return "engine/";
         }
-        return null;
     }
 
     /**
