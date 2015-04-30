@@ -240,7 +240,7 @@ public class GameBoard extends JFrame {
         setJMenuBar(gameBar);
         setSize(900, 700);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-        setResizable(false);
+        //setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
