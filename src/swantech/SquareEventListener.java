@@ -135,11 +135,10 @@ public class SquareEventListener implements ActionListener {
         Square kingSquare;
         JButton kingBtn = null;
         boolean isBlackMove = AppGame.GameInstance().getChessEngineInstance().board.isBlackMove();
-        /*kingSquare = AppGame.GameInstance().getChessEngineInstance().FindKing("WHITE");
-        JButton hn = buttonFromSquare(kingSquare);
-        hn.setBackground(Color.BLUE);
-        JOptionPane.showMessageDialog(GameBoard.getGameBoardInstance(), "Eggs are not supposed to be green.");*/
 
+        if(to.isCheckmate()){
+            JOptionPane.showMessageDialog(GameBoard.getGameBoardInstance(), "Checkmate. Game Over!");
+        }
 
         if(to.isCheck()){
             if(isBlackMove){
