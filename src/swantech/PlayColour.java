@@ -1,7 +1,7 @@
 package swantech;
 
 /**
- * Created by simon on 31/03/15.
+ * @author by simon on 31/03/15.
  */
 
 /**
