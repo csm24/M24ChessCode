@@ -3,11 +3,15 @@ package swantech;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -24,6 +28,9 @@ public class GameBoard extends JFrame {
     JPanel leftPanel;
     JPanel centerPanel;
     JPanel rightPanel;
+
+    private MyProfilePanel myProfilePanel;
+    private BestUserPanel bestUserPanel;
 
     private static Timer checkTimer;
     private JMenuBar gameBar;
@@ -127,12 +134,95 @@ public class GameBoard extends JFrame {
         startGameItem = new JMenuItem("New game");
         endGameItem = new JMenuItem("Exit");
 
+        JMenu helpMenu = new JMenu("Help");
+        JMenuItem sourceItem = new JMenuItem("Source code");
+        JMenuItem howToPlayItem = new JMenuItem("How To Play");
+        //JMenuItem helpContentsItem = new JMenuItem("Help Contents");
+        JMenuItem aboutItem = new JMenuItem("About");
+
+
+        //helpMenu.addSeparator();
+        helpMenu.add(howToPlayItem);
+        //helpMenu.add(helpContentsItem);
+        helpMenu.addSeparator();
+        helpMenu.add(aboutItem);
+        helpMenu.add(sourceItem);
+
+
+        aboutItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
+
+
+                String aboutText = "SwanTech Chess\n" +
+                        "Version 1.0\n" +
+                        "CS-M40 coursework\n" +
+                        "Computer Science department\n" +
+                        "Swansea University";
+
+                JOptionPane.showMessageDialog(GameBoard.this, aboutText, "About", JOptionPane.INFORMATION_MESSAGE);
+
+
+            }
+        });
+
+        howToPlayItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
+
+                URL myURL = null;
+                try {
+                    myURL = new URL("http://www.chess.com/learn-how-to-play-chess");
+                } catch (MalformedURLException e) {
+                    //e.printStackTrace();
+                }
+                openWebpage(myURL);
+
+            }
+        });
+
+
+        sourceItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
+
+                URL myURL = null;
+                try {
+                    myURL = new URL("https://github.com/csm24");
+                } catch (MalformedURLException e) {
+                    //e.printStackTrace();
+                }
+                openWebpage(myURL);
+
+            }
+        });
+
+
         gameMenuActionListener = new GameMenuActionListener();
         squareEventListener = new SquareEventListener();
 
         gameMenu.add(startGameItem);
         gameMenu.add(endGameItem);
         gameBar.add(gameMenu);
+        gameBar.add(helpMenu);
+
+
+        gameMenu.setMnemonic(KeyEvent.VK_G);
+        helpMenu.setMnemonic(KeyEvent.VK_H);
+
+        startGameItem.setMnemonic(KeyEvent.VK_N);
+        startGameItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
+
+        endGameItem.setMnemonic(KeyEvent.VK_X);
+        endGameItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.CTRL_MASK));
+
+
+        endGameItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
+                int action = JOptionPane.showConfirmDialog(GameBoard.this, "Do you want to leave the game?", "Confirm Exit", JOptionPane.OK_CANCEL_OPTION);
+                if (action == JOptionPane.OK_OPTION) {
+                    System.exit(0);
+                }
+            }
+        });
+
 
         startGameItem.addActionListener(gameMenuActionListener);
         endGameItem.addActionListener(gameMenuActionListener);
@@ -155,13 +245,22 @@ public class GameBoard extends JFrame {
 
         setJMenuBar(gameBar);
         setSize(900, 700);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setResizable(false);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
+
     }
 
     /**
      * Set up the left panel display
      */
     private void BuildLeftPanelDisplay() {
+
+        myProfilePanel = new MyProfilePanel();
+        bestUserPanel = new BestUserPanel();
+        //leftPanel.add(myProfilePanel);
+        //leftPanel.add(bestUserPanel);
 
     }
 
@@ -441,4 +540,26 @@ public class GameBoard extends JFrame {
         }
         //</editor-fold>
     }
+
+
+    public static void openWebpage(URI uri) {
+        Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
+        if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
+            try {
+                desktop.browse(uri);
+            } catch (Exception e) {
+                // e.printStackTrace();
+            }
+        }
+    }
+
+    public static void openWebpage(URL url) {
+        try {
+            openWebpage(url.toURI());
+        } catch (URISyntaxException e) {
+            // e.printStackTrace();
+        }
+    }
+
+
 }

@@ -12,7 +12,7 @@ import java.util.logging.*;
 import ictk.boardgame.*;
 import ictk.boardgame.chess.*;
 import ictk.boardgame.chess.io.FEN;
-import jdk.nashorn.internal.ir.ReturnNode;
+//import jdk.nashorn.internal.ir.ReturnNode;
 
 import static ictk.boardgame.chess.io.FEN.*;
 
@@ -96,9 +96,12 @@ public class ChessEngine {
                 if (path != null)
                     stockfish = new Stockfish(path);  // create new stockfish interface IOS
 //                stockfish = new Stockfish(path + "stockfish-6-64");  // create new stockfish interface IOS
-            } else {
+            } else if(os.contains("win")) {
                 // Windows?
                 stockfish = new Stockfish(path + "stockfish-6-32.exe");  // create new stockfish interface WINDOWS
+            }
+            else{
+                stockfish = new Stockfish(path +"stockfish_6_x64");  // create new stockfish interface Linux
             }
 
             if (!stockfish.startEngine()) {
