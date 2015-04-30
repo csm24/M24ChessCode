@@ -74,10 +74,10 @@ public class SquareEventListener implements ActionListener {
     }
 
     /**
-     * TODO Doxygen description
+     * Generates an ictk library square using our internal row and column numbering
      * @param f int, integer file of the square on the chess board
      * @param r int, integer rank of the square on the chess board
-     * @return
+     * @return Square (just rank and file, no piece data)
      */
     private Square intSquare(int f, int r)
     {

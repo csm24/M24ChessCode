@@ -187,7 +187,7 @@ public class ChessEngine {
      * @return
      */
     public Square findPiece (String name, String colour)
-    {// TODO: this is rubbish
+    {
         Square s=null;
 
     for (int r = 1; r <= 8; r++)
@@ -487,8 +487,8 @@ public class ChessEngine {
             }
 
             // The big one, calculate a move
-            // TODO: unreliable?
-            responses = askStockfish("go", 2500);  // TODO reduce 2000 ??
+            // Needs quite a long time to process a move
+            responses = askStockfish("go", 2000);  // TODO tune this for fastest reliable operation
             // Should get several lines, last one is important and says eg:
             // bestmove g1f3 ponder d7d5 -
             // check words(0) == bestmove, and if ok, use words(1) for the move

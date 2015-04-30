@@ -23,16 +23,5 @@ public class GameMenuActionListener implements ActionListener {
         } else {
             System.err.println("GamemenuActionListener:actionPerformed Unknown option");
         }
-
-        // This code will not run under OS X InterrliJ - stuck with JVM 1.6!
-//        switch (e.getActionCommand()){
-//            case "New game":
-//                GameBoard.getGameBoardInstance().GameOptionsDialog();//start game
-//                //AppGame.GameInstance().GetGameBoardInstance().GameOptionsDialog(); //start game
-//                break;
-//            case "Exit":
-//                //TODO create a handler for this
-//                break;
-//        }
     }
 }
